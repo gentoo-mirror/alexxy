@@ -9,7 +9,7 @@ SRC_URI="http://www.tangogps.org/downloads/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="gps"
+IUSE="gps nls"
 
 RDEPEND=""
 DEPEND="x11-libs/gtk+
