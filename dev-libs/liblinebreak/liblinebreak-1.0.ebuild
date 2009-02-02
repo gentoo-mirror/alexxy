@@ -16,7 +16,7 @@ IUSE=""
 DEPEND=""
 RDEPEND=""
 
-PATHCES=( "${FILESDIR}/${P}-respect-flags.patch" )
+PATCHES=( "${FILESDIR}/${P}-respect-flags.patch" )
 
 src_install() {
 	emake DESTDIR="${D}" install || die "install failed"
