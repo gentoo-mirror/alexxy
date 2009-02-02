@@ -68,12 +68,12 @@ src_prepare() {
 		sed -i "s:UILIBS = -lqt-mt:UILIBS = -L${QTDIR}/lib -lqt-mt:" makefiles/arch/desktop.mk
 
 	fi
-	
+
 	if use gtk ; then
 	# gtk
 		echo "UI_TYPE = gtk" >> makefiles/target.mk
 	fi
-	
+
 	if use debug ; then
 		echo "TARGET_STATUS = debug" >> makefiles/target.mk
 	else
@@ -83,6 +83,5 @@ src_prepare() {
 
 src_install() {
 	emake DESTDIR="${D}" install || die "install failed"
-	
 	dosym /usr/bin/FBReader /usr/bin/fbreader
 }
