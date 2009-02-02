@@ -1,0 +1,7 @@
+# ChangeLog for dev-cpp/curlpp
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  02 Feb 2009; Alexey Shvetsov <alexxy@gentoo.org> curlpp-0.7.2.ebuild:
+  Bump to EAPI2
+

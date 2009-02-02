@@ -1,6 +1,8 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+
+EAPI="2"
 
 inherit autotools
 
@@ -10,12 +12,13 @@ SRC_URI="http://rrette.com/files/curlpp/curlpp-0.7/${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="net-misc/curl"
+RDEPEND="${DEPEND}"
 
-src_unpack() {
+src_prepare() {
 	sed -i -e "s:@CURLPP_CFLAGS@:@CURLPP_CXXFLAGS@:" curlpp-config.in
 	epatch "${FILESDIR}/disable-examples-build.patch" #example18 doesnt build
 	eautoreconf
