@@ -24,12 +24,6 @@ RDEPEND="|| ( ( x11-libs/qt-gui:4 x11-libs/qt-opengl:4 )
 	>=sci-chemistry/openbabel-2.2.0
 	python? ( >=dev-lang/python-2.5 >=dev-libs/boost-1.34 )"
 
-src_unpack() {
-	git_src_unpack
-	cd "${S}"
-	epatch "${FILESDIR}"/${PN}-0.8.1-openbabel-2.2.0.patch
-}
-
 src_compile() {
 	if use python; then
 		USEPYTHON="TRUE"
