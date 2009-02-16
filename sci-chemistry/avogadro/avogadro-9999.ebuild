@@ -25,7 +25,7 @@ RDEPEND="|| ( ( x11-libs/qt-gui:4 x11-libs/qt-opengl:4 )
 	python? ( >=dev-lang/python-2.5 >=dev-libs/boost-1.34 )"
 
 src_unpack() {
-	unpack ${A}
+	git_src_unpack
 	cd "${S}"
 	epatch "${FILESDIR}"/${PN}-0.8.1-openbabel-2.2.0.patch
 }
