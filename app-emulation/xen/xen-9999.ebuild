@@ -16,7 +16,7 @@ IUSE="debug custom-cflags pae acm flask xsm"
 
 RDEPEND="|| ( sys-boot/grub
 		sys-boot/grub-static )
-		>=sys-kernel/xen-sources-9999"
+		>=sys-kernel/xen-sources-2.6.${PV}"
 PDEPEND="~app-emulation/xen-tools-${PV}"
 
 RESTRICT="test"
