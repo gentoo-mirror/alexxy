@@ -14,7 +14,7 @@ S="${WORKDIR}/${REPO}"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="doc debug screen custom-cflags pygrub hvm api acm flask"
 
 CDEPEND="dev-lang/python
