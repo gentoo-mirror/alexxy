@@ -28,7 +28,7 @@ src_unpack() {
 	git_src_unpack
 	cd "${EGIT_STORE_DIR}/${EGIT_PROJECT}"
 	local last_commit_abbrev=$(git log -n 1 --no-color --pretty='format:%h')
-	EXTRAVERSION="-${KV_MOD}.git-${last_commit_abbrev}"
+	EXTRAVERSION="-xen.git-${last_commit_abbrev}"
 	S=${WORKDIR}/${EGIT_PROJECT}
 	cd "${S}"
 	unpack_set_extraversion
