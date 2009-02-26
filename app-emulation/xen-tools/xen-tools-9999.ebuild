@@ -59,6 +59,12 @@ QA_EXECSTACK="usr/share/xen/qemu/openbios-sparc32
 
 pkg_setup() {
 	export "CONFIG_LOMOUNT=y"
+	
+	if use ioemu; then
+		export "CONFIG_IOEMU=y"
+	else
+		export "CONFIG_IOEMU=n"
+	fi
 
 	if ! use x86 && ! has x86 $(get_all_abis) && use hvm; then
 		eerror "HVM (VT-x and AMD-v) cannot be built on this system. An x86 or"
