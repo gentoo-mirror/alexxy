@@ -15,7 +15,7 @@ S="${WORKDIR}/${REPO}"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="doc debug screen custom-cflags pygrub hvm api acm flask"
+IUSE="doc debug screen custom-cflags pygrub hvm api acm flask ioemu"
 
 CDEPEND="dev-lang/python
 	sys-libs/zlib
@@ -131,6 +131,10 @@ src_unpack() {
 
 	if ! use pygrub; then
 		sed -i -e '/^SUBDIRS-$(PYTHON_TOOLS) += pygrub$/d' "${S}"/tools/Makefile
+	fi
+	# Don't bother with ioemu, only needed for fully virtualised guests
+	if ! use ioemu; then
+		sed -i -e "/^CONFIG_IOEMU := y$/d" "${S}"/config/*.mk
 	fi
 }
 
