@@ -141,6 +141,8 @@ src_unpack() {
 	# Don't bother with ioemu, only needed for fully virtualised guests
 	if ! use ioemu; then
 		sed -i -e "/^CONFIG_IOEMU := y$/d" "${S}"/config/*.mk
+		sed -i -e "s:install-tools\: tools/ioemu-dir:install-tools\: :g" \
+			"${S}/Makefile"
 	fi
 }
 
