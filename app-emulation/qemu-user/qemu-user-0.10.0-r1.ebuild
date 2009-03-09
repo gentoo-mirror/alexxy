@@ -29,6 +29,7 @@ src_unpack() {
 
 	cd "${S}"
 	epatch "${FILESDIR}/${PN}-chroot.patch"
+	epatch "${FILESDIR}/${PN}-fix_pread_and_pwrite_on_arm.patch"
 	# prevent docs to get automatically installed
 	sed -i '/$(DESTDIR)$(docdir)/d' Makefile
 	# Alter target makefiles to accept CFLAGS set via flag-o
