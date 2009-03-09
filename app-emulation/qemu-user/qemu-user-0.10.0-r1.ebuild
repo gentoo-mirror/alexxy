@@ -29,8 +29,13 @@ src_unpack() {
 
 	cd "${S}"
 	epatch "${FILESDIR}/${PN}-chroot.patch"
-	epatch "${FILESDIR}/${PN}-fix_pread_and_pwrite_on_arm.patch"
-	epatch "${FILESDIR}/${PN}-fstat-arm.patch"
+	epatch "${FILESDIR}/0001-Fix-fstatat64-newfstatat-syscall-implementation.patch"
+	epatch "${FILESDIR}/0002-Rewrite-mmap_find_vma-to-work-fine-on-64-bit-hosts.patch"
+	epatch "${FILESDIR}/0003-Fix-and-cleanup-IPCOP_sem-ipc-calls-handling.patch"
+	epatch "${FILESDIR}/0004-Implement-sem-syscalls.patch"
+	epatch "${FILESDIR}/0005-Fix-and-cleanup-IPCOP_shm-ipc-calls-handling.patch"
+	epatch "${FILESDIR}/0006-Implement-shm-syscalls.patch"
+	epatch "${FILESDIR}/0007-shmat-use-mmap_find_vma-to-find-free-memory-area.patch"
 	# prevent docs to get automatically installed
 	sed -i '/$(DESTDIR)$(docdir)/d' Makefile
 	# Alter target makefiles to accept CFLAGS set via flag-o
