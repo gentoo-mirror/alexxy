@@ -29,7 +29,6 @@ src_unpack() {
 
 	cd "${S}"
 	epatch "${FILESDIR}/${PN}-chroot.patch"
-	epatch "${FILESDIR}/${PN}-futimesat.patch"
 	epatch "${FILESDIR}/0001-Fix-fstatat64-newfstatat-syscall-implementation.patch"
 	epatch "${FILESDIR}/0002-Rewrite-mmap_find_vma-to-work-fine-on-64-bit-hosts.patch"
 	epatch "${FILESDIR}/0003-Fix-and-cleanup-IPCOP_sem-ipc-calls-handling.patch"
