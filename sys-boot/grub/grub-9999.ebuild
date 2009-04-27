@@ -22,7 +22,8 @@ KEYWORDS=""
 IUSE="custom-cflags multislot static"
 
 DEPEND=">=sys-libs/ncurses-5.2-r5
-	dev-libs/lzo"
+		dev-lang/ruby
+		dev-libs/lzo"
 PROVIDE="virtual/bootloader"
 
 RESTRICT="strip"
