@@ -17,7 +17,7 @@ IUSE="injection"
 DEPEND="app-arch/sharutils"
 RDEPEND="!net-wireless/madwifi-old
 		net-wireless/wireless-tools
-		~net-wireless/madwifi-ng-tools-hal-${PV}"
+		~net-wireless/madwifi-ng-tools-${PV}"
 
 CONFIG_CHECK="CRYPTO WIRELESS_EXT SYSCTL"
 ERROR_CRYPTO="${P} requires Cryptographic API support (CONFIG_CRYPTO)."
