@@ -1,0 +1,10 @@
+# ChangeLog for net-wireless/madwifi-ng-tools
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  28 Apr 2009; Alexey Shvetsov <alexxy@gentoo.org>
+  +net-wireless/madwifi-ng-tools/metadata.xml,
+  +net-wireless/madwifi-ng/files/madwifi-ng-hal-injection.patch,
+  +net-wireless/madwifi-ng/metadata.xml:
+  bump
+
