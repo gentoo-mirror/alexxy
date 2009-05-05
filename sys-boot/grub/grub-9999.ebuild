@@ -19,7 +19,7 @@ HOMEPAGE="http://www.gnu.org/software/grub/"
 LICENSE="GPL-3"
 use multislot && SLOT="2" || SLOT="0"
 KEYWORDS=""
-IUSE="custom-cflags multislot static"
+IUSE="custom-cflags multislot static efiemu"
 
 DEPEND=">=sys-libs/ncurses-5.2-r5
 		dev-lang/ruby
@@ -51,6 +51,7 @@ src_compile() {
 		--sbindir=/sbin \
 		--bindir=/bin \
 		--libdir=/$(get_libdir) \
+		$(use_enable efiemu) \
 		|| die "econf failed"
 	emake -j1 || die "making regular stuff"
 }
