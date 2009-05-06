@@ -11,7 +11,6 @@ inherit kernel-2
 detect_version
 
 EGIT_REPO_URI="git://git.kernel.org/pub/scm/linux/kernel/git/jeremy/xen.git"
-EGIT_BRANCH="xen/dom0/hackery"
 
 inherit git
 
