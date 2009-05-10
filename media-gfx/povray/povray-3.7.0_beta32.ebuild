@@ -35,12 +35,6 @@ S="${WORKDIR}/${PN}-${MY_PV}"
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-
-	# Print info on how to extend the expiration date of the beta
-	# if it has expired.
-	epatch "${FILESDIR}"/${P}-print-extend-expiration-info.patch
-	epatch "${FILESDIR}"/${P}-fix-expiration-bug.patch
-
 	# Change some destination directories that cannot be adjusted via configure
 	cp configure.ac configure.ac.orig
 	sed -i -e 's:${povsysconfdir}/$PACKAGE/$VERSION_BASE:${povsysconfdir}/'${PN}':g' configure.ac
