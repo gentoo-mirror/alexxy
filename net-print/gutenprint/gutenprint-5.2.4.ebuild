@@ -30,7 +30,6 @@ src_unpack() {
 	cd "${S}"
 
 	epatch "${FILESDIR}"/${P}-CFLAGS.patch
-	epatch "${FILESDIR}"/${P}-parallel-build.patch
 
 	# IJS Patch
 	sed -i -e "s:<ijs\([^/]\):<ijs/ijs\1:g" src/ghost/ijsgutenprint.c || die "sed failed"
