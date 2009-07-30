@@ -1,8 +1,8 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-print/gutenprint/gutenprint-5.1.7.ebuild,v 1.2 2008/04/05 16:21:37 genstef Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-print/gutenprint/gutenprint-5.2.3.ebuild,v 1.1 2009/03/04 22:54:09 dirtyepic Exp $
 
-inherit flag-o-matic eutils multilib
+inherit autotools flag-o-matic eutils multilib
 
 IUSE="cups foomaticdb gimp gtk readline ppds"
 
@@ -25,7 +25,19 @@ DEPEND="${RDEPEND}
 LICENSE="GPL-2"
 SLOT="0"
 
-append-flags -fno-inline-functions
+src_unpack() {
+	unpack ${A}
+	cd "${S}"
+
+	epatch "${FILESDIR}"/${P}-CFLAGS.patch
+	epatch "${FILESDIR}"/${P}-parallel-build.patch
+
+	# IJS Patch
+	sed -i -e "s:<ijs\([^/]\):<ijs/ijs\1:g" src/ghost/ijsgutenprint.c || die "sed failed"
+
+	mkdir m4local
+	AT_M4DIR="m4extra" eautoreconf
+}
 
 src_compile() {
 	if use cups && use ppds; then
@@ -57,19 +69,13 @@ src_compile() {
 		$(use_with gimp gimp2) \
 		$(use_with gimp gimp2-as-gutenprint) \
 		$(use_with cups) \
-		$myconf || die "econf failed"
-
-	# IJS Patch
-	sed -i -e "s:<ijs\([^/]\):<ijs/ijs\1:g" src/ghost/ijsgutenprint.c || die "sed failed"
+		${myconf} || die "econf failed"
 
 	emake || die "emake failed"
 }
 
 src_install () {
-	emake -j1 DESTDIR="${D}" install || die "emake install failed"
-
-	exeinto /usr/share/gutenprint
-	doexe test/{unprint,pcl-unprint,bjc-unprint,parse-escp2,escp2-weavetest,run-testdither,run-weavetest,testdither}
+	emake DESTDIR="${D}" install || die "emake install failed"
 
 	dodoc AUTHORS ChangeLog NEWS README doc/gutenprint-users-manual.{pdf,odt}
 	dohtml doc/FAQ.html
@@ -82,10 +88,10 @@ src_install () {
 }
 
 pkg_postinst() {
-	if [ "${ROOT}" == "/" ] && [ -x /usr/sbin/cups-genppdupdate.5.1 ]; then
+	if [ "${ROOT}" == "/" ] && [ -x /usr/sbin/cups-genppdupdate ]; then
 		elog "Updating installed printer ppd files"
-		elog $(/usr/sbin/cups-genppdupdate.5.1)
+		elog $(/usr/sbin/cups-genppdupdate)
 	else
-		elog "You need to update installed ppds manually using cups-genppdupdate.5.1"
+		elog "You need to update installed ppds manually using cups-genppdupdate"
 	fi
 }
