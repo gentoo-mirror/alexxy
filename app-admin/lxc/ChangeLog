@@ -1,0 +1,36 @@
+# ChangeLog for app-admin/lxc
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  03 Nov 2009; Andrian Nord <NightNord@niifaq.ru>
+  files/lxc-9999-fix-doc-automagic.patch:
+  fix doc automagic patch fixed as upstream requested
+
+  02 Nov 2009; Andrian Nord <NightNord@niifaq.ru> lxc-9999.ebuild,
+  +files/lxc.initd:
+  lxc init.d script added. Middlework. TODO: hooks system, start sysvinit
+  hook
+
+  01 Nov 2009; Andrian Nord <NightNord@niifaq.ru>
+  +files/9999-extra/0001-add-capabilities-support.patch, lxc-9999.ebuild,
+  +files/9999-extra/0002-add-config-include.patch, metadata.xml:
+  add extra patches
+
+  31 Oct 2009; Andrian Nord <NightNord@niifaq.ru> lxc-9999.ebuild:
+  DEVPTS_MULTIPLE_INSTANCES info added
+
+*lxc-9999 (29 Oct 2009)
+
+  29 Oct 2009; Andrian Nord <NightNord@niifaq.ru> +lxc-9999.ebuild:
+  live ebuild on its way
+
+  24 Oct 2009; Andrian Nord <NightNord@niifaq.ru>
+  +files/0.6.2-as-needed.patch, lxc-0.6.3.ebuild:
+  Merge with 'mainline' ebuild
+
+*lxc-0.6.3 (20 Oct 2009)
+
+  20 Oct 2009; Andrian Nord <NightNord@niifaq.ru> +lxc-0.6.3.ebuild,
+  +metadata.xml, +lxc-0.6.3-fix-doc-automagic.patch:
+  Initial addition
+

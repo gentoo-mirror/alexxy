@@ -1,0 +1,45 @@
+diff --git a/configure.ac b/configure.ac
+index 25b77eb..dab7ca3 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -12,8 +12,19 @@ AM_PROG_CC_C_O
+ AC_GNU_SOURCE
+ AC_PROG_LIBTOOL
+ AC_CHECK_PROG(SETCAP, setcap, yes, no, $PATH$PATH_SEPARATOR/sbin)
+-AC_CHECK_PROG(DOCBOOK, docbook2man, yes, no)
+-AM_CONDITIONAL(ENABLE_DOCBOOK, test x$DOCBOOK = xyes)
++
++AC_ARG_ENABLE([doc],
++	[AC_HELP_STRING([--enable-doc], [make mans (require docbook2man installed) [default=no]])],
++	[], [enable_doc=no])
++	 
++if test "x$enable_doc" = "xyes"; then
++	AC_CHECK_PROG(have_docbook, [docbook2man], [yes])
++
++	test "x$have_docbook" = "xyes" || AC_MSG_ERROR([docbook2man required for man generation])
++fi
++
++AM_CONDITIONAL([ENABLE_DOCBOOK], [test "x$enable_doc" = "xyes"])
++
+ AS_AC_EXPAND(PREFIX, $prefix)
+ AS_AC_EXPAND(LIBDIR, $libdir)
+ AS_AC_EXPAND(BINDIR, $bindir)
+@@ -114,18 +125,6 @@ AC_CONFIG_FILES([
+ AC_CONFIG_COMMANDS([default],[[]],[[]])
+ AC_OUTPUT
+ 
+-if test "x$DOCBOOK" = "xno"; then
+-   AC_MSG_NOTICE([
+-
+-Warning:
+---------
+-The docbook tool is not installed, the man pages won't be generated.
+-If you want the man pages, install docbook and rerun 'configure'.
+-
+-])
+-
+-fi
+-
+ if test "x$SETCAP" = "xno"; then
+    AC_MSG_NOTICE([
+ 
