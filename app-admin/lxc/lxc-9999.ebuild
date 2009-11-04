@@ -52,8 +52,6 @@ INFO_VETH="Required for internal (inter-container) networking"
 INFO_MACVLAN="${INFO_VETH}"
 
 src_prepare() {
-	epatch "${FILESDIR}/${P}-fix-doc-automagic.patch"
-
 	if use extra; then
 		ewarn "You've enabled extra patches, which are currently"
 		ewarn "UNSUPPORTED by upstream. If you experiesing any problems"
