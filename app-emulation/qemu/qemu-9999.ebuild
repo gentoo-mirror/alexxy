@@ -13,7 +13,7 @@ EGIT_REPO_URI="git://git.sv.gnu.org/qemu.git"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="alsa bluetooth esd gnutls ncurses pulseaudio sasl +sdl vde kqemu kvm static"
+IUSE="alsa bluetooth esd gnutls ncurses pulseaudio sasl +sdl vde kvm static"
 
 COMMON_TARGETS="i386 x86_64 arm cris m68k mips mipsel mips64 mips64el ppc ppc64 sh4 sh4eb sparc"
 
@@ -88,7 +88,6 @@ src_configure() {
 		use sdl || conf_opts="$conf_opts --disable-sdl"
 		use vde || conf_opts="$conf_opts --disable-vde"
 		use bluetooth || conf_opts="$conf_opts --disable-bluez"
-		use kqemu || conf_opts="$conf_opts --disable-kqemu"
 		use kvm || conf_opts="$conf_opts --disable-kvm"
 
 		audio_opts="oss"
@@ -112,7 +111,7 @@ src_configure() {
 	fi
 
 	if use static; then
-		conf_opts="$conf_opts --enable-static"
+		conf_opts="$conf_opts --static"
 	fi
 
 	conf_opts="$conf_opts --prefix=/usr"
