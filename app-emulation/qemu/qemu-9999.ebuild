@@ -124,6 +124,7 @@ src_configure() {
 		--audio-drv-list="$audio_opts" \
 		--cc=$(tc-getCC) --host-cc=$(tc-getCC) \
 		--target-list="${target_list}" \
+		--disable-werror \
 		|| die "configure failed"
 }
 
