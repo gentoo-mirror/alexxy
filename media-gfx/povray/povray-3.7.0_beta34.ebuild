@@ -35,6 +35,7 @@ S="${WORKDIR}/${PN}-${MY_PV}"
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
+	epatch "${FILESDIR}/${PN}_notime.patch"
 	# Change some destination directories that cannot be adjusted via configure
 	cp configure.ac configure.ac.orig
 	sed -i -e 's:${povsysconfdir}/$PACKAGE/$VERSION_BASE:${povsysconfdir}/'${PN}':g' configure.ac
