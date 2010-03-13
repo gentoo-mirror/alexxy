@@ -249,6 +249,7 @@ src_prepare() {
 	epatch "${FILESDIR}"/NVIDIA_glx-defines.patch
 	# Use some more sensible gl headers and make way for new glext.h
 	epatch "${FILESDIR}"/NVIDIA_glx-glheader.patch
+	epatch "${FILESDIR}"/nvidia-drivers-195.17-2.6.33.patch
 
 	if use kernel_linux; then
 		# Quiet down warnings the user does not need to see
@@ -257,8 +258,8 @@ src_prepare() {
 			-e 's:-Wsign-compare::g' \
 			"${NV_SRC}"/Makefile.kbuild
 
-                # Add support for the 'x86' unified kernel arch in conftest.sh
-                epatch "${FILESDIR}"/195.17-unified-arch.patch
+		# Add support for the 'x86' unified kernel arch in conftest.sh
+		epatch "${FILESDIR}"/195.17-unified-arch.patch
 
 		# If you set this then it's your own fault when stuff breaks :)
 		use custom-cflags && sed -i "s:-O:${CFLAGS}:" "${NV_SRC}"/Makefile.*
