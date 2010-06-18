@@ -1,0 +1,14 @@
+diff -NuarpbB NVIDIA-Linux-x86-256.29-ori/kernel/nv-linux.h NVIDIA-Linux-x86-256.29/kernel/nv-linux.h
+--- NVIDIA-Linux-x86-256.29-ori/kernel/nv-linux.h	2010-05-28 02:27:59.000000000 +0200
++++ NVIDIA-Linux-x86-256.29/kernel/nv-linux.h	2010-06-16 04:05:34.000000000 +0200
+@@ -209,8 +209,8 @@ extern int nv_pat_mode;
+     (NV_ACPI_WALK_NAMESPACE_ARGUMENT_COUNT == 6)
+ #define NV_ACPI_WALK_NAMESPACE(type, args...) acpi_walk_namespace(type, args)
+ #elif (NV_ACPI_WALK_NAMESPACE_ARGUMENT_COUNT == 7)
+-#define NV_ACPI_WALK_NAMESPACE(type, args...) \
+-    acpi_walk_namespace(type, args, NULL)
++#define NV_ACPI_WALK_NAMESPACE(type, a2, a3, a4, a5, a6) \
++    acpi_walk_namespace(type, a2, a3, a4, NULL, a5, a6)
+ #else
+ #error "NV_ACPI_WALK_NAMESPACE_ARGUMENT_COUNT value unrecognized!"
+ #endif

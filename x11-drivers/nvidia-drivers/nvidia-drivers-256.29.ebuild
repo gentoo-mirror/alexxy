@@ -33,6 +33,7 @@ RDEPEND="${COMMON}
 	kernel_linux? ( virtual/modutils )
 	acpi? ( sys-power/acpid )"
 PDEPEND=">=x11-libs/libvdpau-0.3-r1
+	x11-libs/libXvMC
 	gtk? ( media-video/nvidia-settings )"
 
 QA_TEXTRELS_x86="usr/lib/opengl/nvidia/lib/libnvidia-tls.so.256.29
@@ -273,6 +274,9 @@ src_prepare() {
 
 	# Add support for the 'x86' unified kernel arch in conftest.sh
 	epatch "${FILESDIR}"/256.25-unified-arch.patch
+
+	# Fix #301318 (Cf. http://www.nvnews.net/vbulletin/showthread.php?t=152065)
+	epatch "${FILESDIR}"/256.29-fix-acpi_walk_namespace-params-order.patch
 
 	if use kernel_linux; then
 		# Quiet down warnings the user does not need to see
