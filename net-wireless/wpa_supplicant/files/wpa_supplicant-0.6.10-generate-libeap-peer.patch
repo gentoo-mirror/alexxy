@@ -185,7 +185,7 @@ diff -urN wpa_supplicant-0.6.10.orig/src/eap_peer/Makefile wpa_supplicant-0.6.10
 +endif
 +
 +ifndef CFLAGS
-+CFLAGS = -MMD -O2 -Wall -g
++CFLAGS = -MMD -O2 -Wall -g -fPIC
 +endif
 +
 +CONFIG_TLS=openssl
