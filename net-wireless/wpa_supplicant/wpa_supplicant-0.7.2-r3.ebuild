@@ -74,7 +74,10 @@ src_prepare() {
 	epatch "${FILESDIR}/fix-ssid-combo.patch"
 
 	# wimax setup
-	use wimax && epatch "${FILESDIR}/${P}-generate-libeap-peer.patch"
+	if use wimax; then
+		cd "${WORKDIR}/${P}"
+		epatch "${FILESDIR}/${P}-generate-libeap-peer.patch"
+	fi
 }
 
 src_configure() {
