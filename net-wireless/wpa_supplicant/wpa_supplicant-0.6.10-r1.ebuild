@@ -1,10 +1,10 @@
 # Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-wireless/wpa_supplicant/wpa_supplicant-0.7.2-r2.ebuild,v 1.2 2010/06/05 11:07:17 ssuominen Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-wireless/wpa_supplicant/wpa_supplicant-0.6.10.ebuild,v 1.7 2010/07/19 19:05:02 josejx Exp $
 
 EAPI="2"
 
-inherit eutils toolchain-funcs qt4-r2
+inherit eutils toolchain-funcs qt4
 
 DESCRIPTION="IEEE 802.1X/WPA supplicant for secure wireless transfers"
 HOMEPAGE="http://hostap.epitest.fi/wpa_supplicant/"
@@ -65,17 +65,10 @@ src_prepare() {
 		-e "s:/usr/lib/pkcs11:/usr/$(get_libdir):" \
 		wpa_supplicant.conf || die
 
-	epatch "${FILESDIR}/${P}-dbus_path_fix.patch"
+	epatch "${FILESDIR}"/dbus_path_fix.patch
 
-	# bug (320097)
-	epatch "${FILESDIR}/do-not-call-dbus-functions-with-NULL-path.patch"
-
-	# bug (321627)
-	epatch "${FILESDIR}/fix-ssid-combo.patch"
-
-	# wimax setup
 	if use wimax; then
-		cd "${WORKDIR}/${P}"
+		cd S="${WORKDIR}/${P}"
 		epatch "${FILESDIR}/${P}-generate-libeap-peer.patch"
 	fi
 }
@@ -178,21 +171,15 @@ src_configure() {
 
 	# Enable mitigation against certain attacks against TKIP
 	echo "CONFIG_DELAYED_MIC_ERROR_REPORT=y" >> .config
-
-	if use qt4 ; then
-		cd "${S}"/wpa_gui-qt4
-		eqmake4 wpa_gui.pro
-	fi
 }
 
 src_compile() {
-	einfo "Building wpa_supplicant"
 	emake || die "emake failed"
 
 	if use qt4 ; then
 		cd "${S}"/wpa_gui-qt4
-		einfo "Building wpa_gui"
-		emake || die "wpa_gui compilation failed"
+		eqmake4 wpa_gui.pro
+		emake || die "Qt4 wpa_gui compilation failed"
 	fi
 }
 
@@ -224,16 +211,18 @@ src_install() {
 	if use qt4 ; then
 		into /usr
 		dobin wpa_gui-qt4/wpa_gui || die
+	fi
+
+	if use qt4 ; then
 		doicon wpa_gui-qt4/icons/wpa_gui.svg || die "Icon not found"
 		make_desktop_entry wpa_gui "WPA Supplicant Administration GUI" "wpa_gui" "Qt;Network;"
 	fi
 
 	if use dbus ; then
-		cd "${S}"/dbus
 		insinto /etc/dbus-1/system.d
 		newins dbus-wpa_supplicant.conf wpa_supplicant.conf || die
 		insinto /usr/share/dbus-1/system-services
-		doins fi.epitest.hostap.WPASupplicant.service || die
+		newins dbus-wpa_supplicant.service 'fi.epitest.hostap.WPASupplicant.service' || die
 		keepdir /var/run/wpa_supplicant
 	fi
 }
