@@ -1,6 +1,6 @@
-diff -urN ../wpa_supplicant-0.6.10.orig/src/eap_peer/eap_methods.c ./src/eap_peer/eap_methods.c
---- ../wpa_supplicant-0.6.10.orig/src/eap_peer/eap_methods.c	2010-01-12 06:55:02.000000000 -0800
-+++ ./src/eap_peer/eap_methods.c	2010-05-12 14:57:02.000000000 -0700
+diff -urN wpa_supplicant-0.6.10.orig/src/eap_peer/eap_methods.c wpa_supplicant-0.6.10/src/eap_peer/eap_methods.c
+--- wpa_supplicant-0.6.10.orig/src/eap_peer/eap_methods.c	2010-01-12 06:55:02.000000000 -0800
++++ wpa_supplicant-0.6.10/src/eap_peer/eap_methods.c	2010-05-12 14:57:02.000000000 -0700
 @@ -339,6 +339,146 @@
  }
  
@@ -148,9 +148,9 @@ diff -urN ../wpa_supplicant-0.6.10.orig/src/eap_peer/eap_methods.c ./src/eap_pee
  /**
   * eap_peer_register_methods - Register statically linked EAP peer methods
   * Returns: 0 on success, -1 on failure
-diff -urN ../wpa_supplicant-0.6.10.orig/src/eap_peer/libeap0.pc ./src/eap_peer/libeap0.pc
---- ../wpa_supplicant-0.6.10.orig/src/eap_peer/libeap0.pc	1969-12-31 16:00:00.000000000 -0800
-+++ ./src/eap_peer/libeap0.pc	2010-05-12 14:57:02.000000000 -0700
+diff -urN wpa_supplicant-0.6.10.orig/src/eap_peer/libeap0.pc wpa_supplicant-0.6.10/src/eap_peer/libeap0.pc
+--- wpa_supplicant-0.6.10.orig/src/eap_peer/libeap0.pc	1969-12-31 16:00:00.000000000 -0800
++++ wpa_supplicant-0.6.10/src/eap_peer/libeap0.pc	2010-05-12 14:57:02.000000000 -0700
 @@ -0,0 +1,10 @@
 +prefix=/usr
 +exec_prefix=/usr
@@ -162,9 +162,9 @@ diff -urN ../wpa_supplicant-0.6.10.orig/src/eap_peer/libeap0.pc ./src/eap_peer/l
 +Version: 0.6.7
 +Libs: -L${libdir} -leap
 +Cflags: -I${includedir}
-diff -urN ../wpa_supplicant-0.6.10.orig/src/eap_peer/Makefile ./src/eap_peer/Makefile
---- ../wpa_supplicant-0.6.10.orig/src/eap_peer/Makefile	2010-01-12 06:55:02.000000000 -0800
-+++ ./src/eap_peer/Makefile	2010-05-12 15:00:11.000000000 -0700
+diff -urN wpa_supplicant-0.6.10.orig/src/eap_peer/Makefile wpa_supplicant-0.6.10/src/eap_peer/Makefile
+--- wpa_supplicant-0.6.10.orig/src/eap_peer/Makefile	2010-01-12 06:55:02.000000000 -0800
++++ wpa_supplicant-0.6.10/src/eap_peer/Makefile	2010-05-12 15:00:11.000000000 -0700
 @@ -1,12 +1,177 @@
 -all:
 -	@echo Nothing to be made.
@@ -352,9 +352,9 @@ diff -urN ../wpa_supplicant-0.6.10.orig/src/eap_peer/Makefile ./src/eap_peer/Mak
 -		cp *.so $(DESTDIR)$(LIBDIR)/wpa_supplicant \
 -	; fi
 +-include $(OBJS:%.o=%.d)
-diff -urN ../wpa_supplicant-0.6.10.orig/wpa_supplicant/Makefile ./wpa_supplicant/Makefile
---- ../wpa_supplicant-0.6.10.orig/wpa_supplicant/Makefile	2010-01-12 06:55:02.000000000 -0800
-+++ ./wpa_supplicant/Makefile	2010-05-12 14:57:02.000000000 -0700
+diff -urN wpa_supplicant-0.6.10.orig/wpa_supplicant/Makefile wpa_supplicant-0.6.10/wpa_supplicant/Makefile
+--- wpa_supplicant-0.6.10.orig/wpa_supplicant/Makefile	2010-01-12 06:55:02.000000000 -0800
++++ wpa_supplicant-0.6.10/wpa_supplicant/Makefile	2010-05-12 14:57:02.000000000 -0700
 @@ -17,7 +17,7 @@
  
  ALL=wpa_supplicant wpa_passphrase wpa_cli
