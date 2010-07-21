@@ -68,7 +68,7 @@ src_prepare() {
 	epatch "${FILESDIR}"/dbus_path_fix.patch
 
 	if use wimax; then
-		cd S="${WORKDIR}/${P}"
+		cd "${WORKDIR}/${P}"
 		epatch "${FILESDIR}/${P}-generate-libeap-peer.patch"
 	fi
 }
