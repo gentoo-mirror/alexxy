@@ -5,7 +5,7 @@
 EAPI="3"
 MY_PV=${PV%.0}
 
-DESCRIPTION="Intel (R) WiMAX 5150/5350 Firmware"
+DESCRIPTION="Intel (R) WiMAX 5150/5350/6250 Firmware"
 HOMEPAGE="http://www.linuxwimax.org"
 SRC_URI="http://www.linuxwimax.org/Download?action=AttachFile&do=get&target=${P}.tar.bz2 -> ${P}.tar.bz2"
 
