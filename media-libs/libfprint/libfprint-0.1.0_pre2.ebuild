@@ -32,6 +32,8 @@ PATCHES=(
 		"${FILESDIR}/0006-Revised-patch-to-address-addition-of-upeke2-driver.patch"
 )
 
+S="${WORKDIR}/${PN}-${MY_PV}"
+
 src_install() {
 	emake DESTDIR="${D}" install
 }
