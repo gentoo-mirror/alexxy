@@ -21,6 +21,12 @@ RDEPEND="${DEPEND}
 	net-wireless/wimax-tools
 	net-wireless/wpa_supplicant[wimax]"
 
+src_prepare() {
+	use amd64 && sed -i 's:REG_EIP:REG_RIP:g' \
+		InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c \
+			die "Sed failed"
+}
+
 src_configure() {
 	econf \
 		--with-libwimaxll=/usr/$(get_libdir) \
@@ -30,5 +36,4 @@ src_configure() {
 src_install() {
 	emake DESTDIR="${D}" install || die "Install failed"
 	doinitd "${FILESDIR}"/wimax || die "failed to place the init daemon"
-	dodoc README || die "Failed to find README"
 }
