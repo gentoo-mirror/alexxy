@@ -18,7 +18,8 @@ DEPEND="|| ( >=sys-fs/udev-096 >=sys-apps/hotplug-20040923 )"
 
 src_install() {
 	insinto /lib/firmware
-	doins "${S}/${PN}-usb-${MY_PV}.sbcf" || die
-
-	dodoc README || die
+	for x in i2400m i6050 ; do
+		doins "${S}/${x}-usb-${MY_PV}.sbcf" || die
+	done
+	dodoc README LICENSE || die
 }
