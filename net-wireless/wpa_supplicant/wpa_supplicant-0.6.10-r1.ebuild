@@ -220,23 +220,22 @@ src_install() {
 
 	if use wimax; then
 		insinto /usr/include/eap_peer
-		newins	../src/utils/includes.h \
-				../src/utils/common.h \
-				../src/eap_peer/eap.h \
-				../src/common/defs.h \
-				../src/eap_peer/eap_methods.h \
-				../src/eap_peer/eap_config.h \
-				../src/utils/wpabuf.h \
-				../src/crypto/tls.h \
-				../src/utils/build_config.h \
-				../src/utils/os.h \
-				../src/utils/wpa_debug.h \
-				|| die
+		doins	../src/utils/includes.h
+		doins	../src/utils/common.h
+		doins	../src/eap_peer/eap.h
+		doins	../src/common/defs.h
+		doins	../src/eap_peer/eap_methods.h
+		doins	../src/eap_peer/eap_config.h
+		doins	../src/utils/wpabuf.h
+		doins	../src/crypto/tls.h
+		doins	../src/utils/build_config.h
+		doins	../src/utils/os.h
+		doins	../src/utils/wpa_debug.h
 		insinto /usr/include/eap_peer/eap_common
-		newins ../src/eap_common/eap_defs.h || die
+		doins ../src/eap_common/eap_defs.h || die
 		insinto /usr/lib/pkgconfig
-		newins ../src/eap_peer/libeap0.pc
-		dolib ../src/eap_peer/libeap.so.0.0.0
+		doins ../src/eap_peer/libeap0.pc
+		dolib.so ../src/eap_peer/libeap.so.0.0.0
 		dosym /usr/$(get_libdir)/libeap.so.0.0.0 /usr/$(get_libdir)/libeap.so.0
 	fi
 
