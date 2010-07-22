@@ -6,9 +6,11 @@ EAPI="3"
 
 inherit base
 
+MY_PV="${PV/_/-}"
+
 DESCRIPTION="Library to work with varios fingerprint readers"
 HOMEPAGE="http://www.reactivated.net/fprint/wiki/Libfprint"
-SRC_URI="mirror://sourceforge/fprint/${P}.tar.bz2"
+SRC_URI="mirror://sourceforge/fprint/${PN}-${MY_PV}.tar.bz2"
 
 LICENSE="LGPL-2"
 SLOT="0"
