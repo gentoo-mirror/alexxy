@@ -21,8 +21,6 @@ RDEPEND="${DEPEND}
 	net-wireless/wimax-tools
 	net-wireless/wpa_supplicant[wimax]"
 
-S="${WORKDIR}/${MY_P}"
-
 src_configure() {
 	econf \
 		--with-libwimaxll=/usr/$(get_libdir) \
