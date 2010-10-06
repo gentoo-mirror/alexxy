@@ -231,24 +231,7 @@ src_install() {
 	fi
 
 	if use wimax; then
-		insinto /usr/include/eap_peer
-		doins	../src/utils/includes.h
-		doins	../src/utils/common.h
-		doins	../src/eap_peer/eap.h
-		doins	../src/common/defs.h
-		doins	../src/eap_peer/eap_methods.h
-		doins	../src/eap_peer/eap_config.h
-		doins	../src/utils/wpabuf.h
-		doins	../src/crypto/tls.h
-		doins	../src/utils/build_config.h
-		doins	../src/utils/os.h
-		doins	../src/utils/wpa_debug.h
-		insinto /usr/include/eap_peer/eap_common
-		doins ../src/eap_common/eap_defs.h || die
-		insinto /usr/lib/pkgconfig
-		doins ../src/eap_peer/libeap0.pc
-		dolib.so ../src/eap_peer/libeap.so.0.0.0
-		dosym /usr/$(get_libdir)/libeap.so.0.0.0 /usr/$(get_libdir)/libeap.so.0
+		emake DESTDIR="${D}" -C ../src/eap_peer install || die 
 	fi
 
 	if use dbus ; then
