@@ -185,6 +185,10 @@ src_compile() {
 	einfo "Building wpa_supplicant"
 	emake || die "emake failed"
 
+	if use wimax; then
+		emake -C src/eap_peer || die "emake failed"
+	fi
+
 	if use qt4 ; then
 		cd "${S}"/wpa_gui-qt4
 		einfo "Building wpa_gui"
