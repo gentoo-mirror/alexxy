@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit gnome.org eutils git
+inherit gnome.org eutils git autotools
 
 # ModemManager likes itself with capital letters
 MY_PN="${PN/modemmanager/ModemManager}"
@@ -30,6 +30,10 @@ DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
+
+src_prepare() {
+	eautoreconf
+}
 
 src_configure() {
 	# ppp-2.4.5 will change the plugin directory (not added to portage yet)
