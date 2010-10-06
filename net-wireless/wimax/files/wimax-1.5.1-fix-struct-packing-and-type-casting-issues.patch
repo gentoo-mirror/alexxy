@@ -379,7 +379,7 @@ index 9afb111..4c56ab9 100644
  
 +#pragma pack( pop )
 +
- /// The statuses provided by this API can generally be mapped to movements along the SDK common state machine. The indications may provide further detailed information using the APIï¿½s arguments when relevant.
+ /// The statuses provided by this API can generally be mapped to movements along the SDK common state machine. The indications may provide further detailed information using the API�s arguments when relevant.
  /// \param[in] pDeviceId - Pointer to Device Identifier passed on open of device.
  /// \param[in] deviceStatus - The device Status value
 diff --git a/InfraStack/OSDependent/Linux/OSAL/Primitives/wimax_osal_linux_types.h b/InfraStack/OSDependent/Linux/OSAL/Primitives/wimax_osal_linux_types.h
