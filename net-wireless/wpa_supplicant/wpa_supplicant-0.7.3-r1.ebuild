@@ -186,6 +186,7 @@ src_compile() {
 	emake || die "emake failed"
 
 	if use wimax; then
+		cd "${S}"
 		emake -C src/eap_peer || die "emake failed"
 	fi
 
