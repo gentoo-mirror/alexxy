@@ -4,7 +4,7 @@
 
 EAPI="3"
 
-inherit linux-info
+inherit linux-info base
 
 DESCRIPTION="Intel WiMAX daemon used to interface to the hardware"
 HOMEPAGE="http://www.linuxwimax.org/"
