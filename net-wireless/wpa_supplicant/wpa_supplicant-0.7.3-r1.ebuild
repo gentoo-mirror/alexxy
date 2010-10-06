@@ -28,6 +28,7 @@ RDEPEND="dbus? ( sys-apps/dbus )
 	qt4? ( x11-libs/qt-gui:4
 		x11-libs/qt-svg:4 )
 	readline? ( sys-libs/ncurses sys-libs/readline )
+	wimax? ( !net-wireless/libeap )
 	ssl? ( dev-libs/openssl )
 	!ssl? ( gnutls? ( net-libs/gnutls ) )
 	!ssl? ( !gnutls? ( dev-libs/libtommath ) )"
