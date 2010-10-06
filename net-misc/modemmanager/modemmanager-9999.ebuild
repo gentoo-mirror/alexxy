@@ -33,6 +33,8 @@ S="${WORKDIR}/${MY_PN}-${PV}"
 
 src_prepare() {
 	eautoreconf
+	intltoolize --force --copy --automake || die 
+	eautoreconf
 }
 
 src_configure() {
