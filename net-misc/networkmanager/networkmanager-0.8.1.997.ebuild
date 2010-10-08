@@ -83,8 +83,9 @@ pkg_setup() {
 src_prepare() {
 	# Fix up the dbus conf file to use plugdev group
 	epatch "${FILESDIR}/${PN}-0.8.1-confchanges.patch"
-
-	#eautoreconf
+	gtkdocize
+	intltoolize --force
+	eautoreconf
 }
 
 src_configure() {
