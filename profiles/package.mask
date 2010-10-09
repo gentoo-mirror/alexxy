@@ -1,1 +1,2 @@
 ~net-misc/modemmanager-9999
+~net-misc/networkmanager-9999
