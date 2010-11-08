@@ -26,6 +26,7 @@ PATCHES=(
 			"${FILESDIR}/${P}-fix-struct-packing-and-type-casting-issues.patch"
 			"${FILESDIR}/${P}-pthread-mutex-inconsistency.patch"
 			"${FILESDIR}/${P}-malloc-free-warnings.patch"
+			"${FILESDIR}/${P}-kdapi.patch"
 )
 
 pkg_setup() {
