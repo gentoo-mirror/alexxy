@@ -50,7 +50,8 @@ DEPEND="${RDEPEND}
 	dev-util/pkgconfig
 	dev-util/intltool
 	>=net-dialup/ppp-2.4.5
-	doc? ( >=dev-util/gtk-doc-1.8 )"
+	>=dev-util/gtk-doc-1.15
+	doc? ( >=dev-util/gtk-doc-1.15 )"
 
 S=${WORKDIR}/${MY_P}
 
