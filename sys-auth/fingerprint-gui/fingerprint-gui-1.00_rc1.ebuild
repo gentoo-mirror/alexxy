@@ -4,7 +4,7 @@
 
 EAPI="3"
 
-inherit qt4-r2 versionator
+inherit qt4-r2 versionator multilib
 #pam
 
 
@@ -37,7 +37,7 @@ RDEPEND="${DEPEND}
 S=${WORKDIR}/${PN}-${MY_PV}
 
 src_configure() {
-	eqmake4 || die "qmake4 failed"
+	eqmake4 PREFIX="$EROOT/usr" LIB="$(get_libdir)" || die "qmake4 failed"
 }
 
 src_install() {
