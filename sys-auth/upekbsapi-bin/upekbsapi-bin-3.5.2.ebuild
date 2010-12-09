@@ -10,7 +10,7 @@ DESCRIPTION="UPEK Biometric Services SDK for PC"
 HOMEPAGE="http://www.upek.com/solutions/eikon/default.asp"
 SRC_URI="http://www.n-view.net/Appliance/fingerprint/download/${FP_GUI}-src.tar.gz"
 
-LICENSE="EULA"
+LICENSE="UPEK_EULA"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE="+headers"
@@ -41,9 +41,9 @@ src_install() {
 	fi
 	insinto /etc/udev/rules.d
 	doins 91-fingerprint-gui-upek.rules
-	dodir /var/${MY_PN}_data
-	fperms 777 /var/${MY_PN}_data
-	echo "nvmprefix=\"/var/${MY_PN}_data/.NVM\" dualswipe=0" > ${MY_PN}.cfg
+	dodir /var/lib/${MY_PN}_data
+	fperms 777 /var/lib/${MY_PN}_data
+	echo "nvmprefix=\"/var/lib/${MY_PN}_data/.NVM\" dualswipe=0" > ${MY_PN}.cfg
 	insinto /etc
 	doins ${MY_PN}.cfg
 }
