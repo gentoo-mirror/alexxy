@@ -34,14 +34,17 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 src_configure() {
-	eqmake4 PREFIX="$EROOT/usr" LIB="$(get_libdir)" || die "qmake4 failed"
+	eqmake4 \
+		PREFIX="$EROOT/usr" \
+		LIB="$(get_libdir)" \
+		LIBEXEC=libexec \
+		LIBPOLKIT_QT=LIBPOLKIT_QT_1_1 || die "qmake4 failed"
 }
 
 src_install() {
 	emake INSTALL_ROOT="${D}" DESTDIR="${D}" install || die "emake install failed"
 	domenu bin/fingerprint-gui/fingerprint-gui.desktop
 	dodoc CHANGELOG README IMPORTANT-UPGRADE-INFORMATION.txt \
-		Hacking.html \
 		"${FILESDIR}/Install-step-by-step.html"
 }
 

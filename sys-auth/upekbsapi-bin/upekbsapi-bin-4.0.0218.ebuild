@@ -4,11 +4,11 @@
 
 EAPI="3"
 
-FP_GUI=fingerprint-gui-0.15
+FP_GUI=fingerprint-gui-1.00
 MY_PN=${PN/bsapi-bin/}
 DESCRIPTION="UPEK Biometric Services SDK for PC"
 HOMEPAGE="http://www.upek.com/solutions/eikon/default.asp"
-SRC_URI="http://www.n-view.net/Appliance/fingerprint/download/${FP_GUI}-src.tar.gz"
+SRC_URI="http://www.n-view.net/Appliance/fingerprint/download/${FP_GUI}.tar.gz"
 
 LICENSE="UPEK_EULA"
 SLOT="0"
@@ -21,14 +21,12 @@ RDEPEND="${DEPEND}"
 S=${FP_GUI}/${MY_PN}
 
 src_unpack() {
-	unpack ${FP_GUI}-src.tar.gz
+	unpack ${FP_GUI}.tar.gz
 }
 
 src_install() {
 	cd "${S}"/
-	dodoc Readme.pdf releasenotes.txt UPEK_EULA.pdf
 	if use headers; then
-		dodoc doc/BSAPI.pdf  doc/BSAPIUsageonLinux.pdf
 		insinto /usr/include
 		doins include/bsapi.h
 		doins include/bserror.h
