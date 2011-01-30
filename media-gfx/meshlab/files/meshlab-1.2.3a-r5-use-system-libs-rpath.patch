@@ -1,0 +1,322 @@
+diff -urN MeshLabSrc_AllInc_v123a/meshlab/src/common/common.pro MeshLabSrc_AllInc_v123a-patched/meshlab/src/common/common.pro
+--- MeshLabSrc_AllInc_v123a/meshlab/src/common/common.pro	2010-05-05 14:54:06.000000000 +0200
++++ MeshLabSrc_AllInc_v123a-patched/meshlab/src/common/common.pro	2010-05-16 14:39:04.000000000 +0200
+@@ -1,6 +1,5 @@
+ VCGDIR = ../../../vcglib
+-GLEWDIR = ../external/glew-1.5.1
+-GLEWCODE = $$GLEWDIR/src/glew.c
++GLEWDIR = /usr/include/GL
+ 
+ 
+ win32-msvc2005:DESTDIR = ../distrib
+@@ -19,14 +18,14 @@
+ macx:QMAKE_POST_LINK = "cp libcommon.* ../distrib/meshlab.app/Contents/MacOs/"
+ INCLUDEPATH *= ../.. \
+     $$VCGDIR \
+-    $$GLEWDIR/include
++    $$GLEWDIR
+ TEMPLATE = lib
+ linux-g++:CONFIG += dll
+ linux-g++:DESTDIR = ../distrib
+ linux-g++-32:CONFIG += dll
+ linux-g++-32:DESTDIR = ../distrib
+ linux-g++-64:CONFIG += dll
+-linux-g++-64:DESTDIR = ../distrib
++linux-g++-64:DESTDIR = ../distrib 
+ 
+ win32-msvc2005:CONFIG += staticlib
+ win32-msvc2008:CONFIG += staticlib
+@@ -54,5 +53,4 @@
+     filterscript.cpp \
+     GLLogStream.cpp \
+     meshmodel.cpp \
+-    pluginmanager.cpp \
+-    $$GLEWCODE
++    pluginmanager.cpp 
+diff -urN MeshLabSrc_AllInc_v123a/meshlab/src/fgt/filter_func/filter_func.pro MeshLabSrc_AllInc_v123a-patched/meshlab/src/fgt/filter_func/filter_func.pro
+--- MeshLabSrc_AllInc_v123a/meshlab/src/fgt/filter_func/filter_func.pro	2010-05-05 14:54:06.000000000 +0200
++++ MeshLabSrc_AllInc_v123a-patched/meshlab/src/fgt/filter_func/filter_func.pro	2010-05-16 13:29:44.000000000 +0200
+@@ -14,7 +14,7 @@
+ win32-msvc2005:LIBS += ../../external/lib/win32-msvc2005/muparser.lib
+ win32-msvc2008:LIBS += ../../external/lib/win32-msvc2008/muparser.lib
+ macx:LIBS            += ../../external/lib/macx/libmuparser.a
+-linux-g++:LIBS       += ../../external/lib/linux-g++/libmuparser.a
+-linux-g++-32:LIBS       += ../../external/lib/linux-g++-32/libmuparser.a
+-linux-g++-64:LIBS       += ../../external/lib/linux-g++-64/libmuparser.a
+-win32-g++:LIBS		 += ../../external/lib/win32-gcc/libmuparser.a
++linux-g++:LIBS       += -lmuparser
++linux-g++-32:LIBS       += -lmuparser
++linux-g++-64:LIBS       += -lmuparser
++win32-g++:LIBS		 += -lmuparser
+diff -urN MeshLabSrc_AllInc_v123a/meshlab/src/fgt/filter_qhull/filter_qhull.pro MeshLabSrc_AllInc_v123a-patched/meshlab/src/fgt/filter_qhull/filter_qhull.pro
+--- MeshLabSrc_AllInc_v123a/meshlab/src/fgt/filter_qhull/filter_qhull.pro	2010-04-28 09:30:45.000000000 +0200
++++ MeshLabSrc_AllInc_v123a-patched/meshlab/src/fgt/filter_qhull/filter_qhull.pro	2010-06-13 23:21:55.000000000 +0200
+@@ -8,28 +8,14 @@
+ SOURCES       += filter_qhull.cpp \ 
+ 		qhull_tools.cpp 
+ 
+-HEADERS += 	../../external/qhull-2003.1/src/geom.h \
+-		../../external/qhull-2003.1/src/io.h \
+-		../../external/qhull-2003.1/src/mem.h \
+-		../../external/qhull-2003.1/src/merge.h \
+-		../../external/qhull-2003.1/src/poly.h \
+-		../../external/qhull-2003.1/src/qhull.h \
+-		../../external/qhull-2003.1/src/qset.h \
+-		../../external/qhull-2003.1/src/stat.h \
+-		../../external/qhull-2003.1/src/user.h 
+-
+-SOURCES +=	../../external/qhull-2003.1/src/geom.c \
+-		../../external/qhull-2003.1/src/geom2.c \
+-		../../external/qhull-2003.1/src/global.c \
+-		../../external/qhull-2003.1/src/io.c \
+-		../../external/qhull-2003.1/src/mem.c \
+-		../../external/qhull-2003.1/src/merge.c \
+-		../../external/qhull-2003.1/src/poly.c \
+-		../../external/qhull-2003.1/src/poly2.c \
+-		../../external/qhull-2003.1/src/qconvex.c \
+-		../../external/qhull-2003.1/src/qhull.c \
+-		../../external/qhull-2003.1/src/qset.c \
+-		../../external/qhull-2003.1/src/stat.c \
+-		../../external/qhull-2003.1/src/user.c 
++HEADERS += 	/usr/include/qhull/geom.h \
++		/usr/include/qhull/io.h \
++		/usr/include/qhull/mem.h \
++		/usr/include/qhull/merge.h \
++		/usr/include/qhull/poly.h \
++		/usr/include/qhull/qhull.h \
++		/usr/include/qhull/qset.h \
++		/usr/include/qhull/stat.h \
++		/usr/include/qhull/user.h 
+ 
+ TARGET        = filter_qhull
+\ No newline at end of file
+diff -urN MeshLabSrc_AllInc_v123a/meshlab/src/fgt/filter_qhull/qhull_tools.h MeshLabSrc_AllInc_v123a-patched/meshlab/src/fgt/filter_qhull/qhull_tools.h
+--- MeshLabSrc_AllInc_v123a/meshlab/src/fgt/filter_qhull/qhull_tools.h	2010-04-28 09:30:45.000000000 +0200
++++ MeshLabSrc_AllInc_v123a-patched/meshlab/src/fgt/filter_qhull/qhull_tools.h	2010-06-13 23:24:24.000000000 +0200
+@@ -55,14 +55,14 @@
+ #endif
+ #include <stdio.h>
+ #include <stdlib.h>
+-#include "../../external/qhull-2003.1/src/qhull.h"
+-#include "../../external/qhull-2003.1/src/mem.h"
+-#include "../../external/qhull-2003.1/src/qset.h"
+-#include "../../external/qhull-2003.1/src/geom.h"
+-#include "../../external/qhull-2003.1/src/merge.h"
+-#include "../../external/qhull-2003.1/src/poly.h"
+-#include "../../external/qhull-2003.1/src/io.h"
+-#include "../../external/qhull-2003.1/src/stat.h"
++#include "qhull/qhull.h"
++#include "qhull/mem.h"
++#include "qhull/qset.h"
++#include "qhull/geom.h"
++#include "qhull/merge.h"
++#include "qhull/poly.h"
++#include "qhull/io.h"
++#include "qhull/stat.h"
+ #if defined(__cplusplus)
+ }
+ #endif
+@@ -71,4 +71,4 @@
+ facetT *compute_delaunay(int dim, int numpoints, MeshModel &m);
+ bool compute_voronoi(int dim, int numpoints, MeshModel &m, MeshModel &pm,float threshold);
+ bool compute_alpha_shapes(int dim, int numpoints, MeshModel &m, MeshModel &pm,double alpha, bool alphashape);
+-int visible_points(int dim, int numpoints, MeshModel &m, MeshModel &pm,MeshModel &pm2, vcg::Point3f viewpointP,float threshold,bool convex_hullFP,bool triangVP);
+\ No newline at end of file
++int visible_points(int dim, int numpoints, MeshModel &m, MeshModel &pm,MeshModel &pm2, vcg::Point3f viewpointP,float threshold,bool convex_hullFP,bool triangVP);
+diff -urN MeshLabSrc_AllInc_v123a/meshlab/src/meshlab/meshlab.pro MeshLabSrc_AllInc_v123a-patched/meshlab/src/meshlab/meshlab.pro
+--- MeshLabSrc_AllInc_v123a/meshlab/src/meshlab/meshlab.pro	2010-05-05 14:54:06.000000000 +0200
++++ MeshLabSrc_AllInc_v123a-patched/meshlab/src/meshlab/meshlab.pro	2010-06-19 18:06:04.000000000 +0200
+@@ -1,5 +1,5 @@
+ VCGDIR = ../../../vcglib
+-GLEWDIR = ../external/glew-1.5.1
++GLEWDIR = /usr/include/GL
+ #CONFIG += debug_and_release
+ DESTDIR = ../distrib
+ # uncomment to try Eigen
+@@ -7,7 +7,7 @@
+ # CONFIG += warn_off
+ INCLUDEPATH *= ../.. \
+     $$VCGDIR \
+-    $$GLEWDIR/include
++    $$GLEWDIR
+ DEPENDPATH += $$VCGDIR \
+     $$VCGDIR/vcg \
+     $$VCGDIR/wrap
+@@ -88,7 +88,7 @@
+ INCLUDEPATH += . \
+     .. \
+     ../../../vcglib \
+-    $$GLEWDIR/include
++    $$GLEWDIR
+ CONFIG += stl
+ 
+ macx:LIBS += ../common/libcommon.dylib
+@@ -107,12 +107,12 @@
+ #	win32-g++:release:LIBS 			+= -L../common/release -lcommon
+ #}
+ 
+-linux-g++:LIBS += -L../distrib -lcommon
+-linux-g++:QMAKE_RPATHDIR += ../distrib
+-linux-g++-32:LIBS += -L../distrib -lcommon
+-linux-g++-32:QMAKE_RPATHDIR += ../distrib
+-linux-g++-64:LIBS += -L../distrib -lcommon
+-linux-g++-64:QMAKE_RPATHDIR += ../distrib
++linux-g++:LIBS += -L../distrib -lcommon -L/usr/lib -lGLEW
++linux-g++:QMAKE_RPATHDIR += /usr/lib/meshlab
++linux-g++-32:LIBS += -L../distrib -lcommon -L/usr/lib -lGLEW
++linux-g++-32:QMAKE_RPATHDIR += ../usr/lib/meshlab
++linux-g++-64:LIBS += -L../distrib -lcommon -L/usr/lib -lGLEW
++linux-g++-64:QMAKE_RPATHDIR += /usr/lib/meshlab
+ 
+ 
+ # uncomment in your local copy only in emergency cases.
+diff -urN MeshLabSrc_AllInc_v123a/meshlab/src/meshlab/meshlab.qrc MeshLabSrc_AllInc_v123a-patched/meshlab/src/meshlab/meshlab.qrc
+--- MeshLabSrc_AllInc_v123a/meshlab/src/meshlab/meshlab.qrc	2010-04-30 15:10:45.000000000 +0200
++++ MeshLabSrc_AllInc_v123a-patched/meshlab/src/meshlab/meshlab.qrc	2010-05-16 12:58:12.000000000 +0200
+@@ -34,6 +34,5 @@
+         <file>images/100mesh.html</file>
+         <file>images/selected_face.png</file>
+         <file>images/selected_vert.png</file>
+-        <file>images/facebook.gif</file>
+     </qresource>
+ </RCC>
+diff -urN MeshLabSrc_AllInc_v123a/meshlab/src/meshlabplugins/filter_isoparametrization/filter_isoparametrization.pro MeshLabSrc_AllInc_v123a-patched/meshlab/src/meshlabplugins/filter_isoparametrization/filter_isoparametrization.pro
+--- MeshLabSrc_AllInc_v123a/meshlab/src/meshlabplugins/filter_isoparametrization/filter_isoparametrization.pro	2010-05-05 14:54:07.000000000 +0200
++++ MeshLabSrc_AllInc_v123a-patched/meshlab/src/meshlabplugins/filter_isoparametrization/filter_isoparametrization.pro	2010-06-13 23:10:13.000000000 +0200
+@@ -24,7 +24,7 @@
+ 				
+ TARGET        = filter_isoparametrization
+ INCLUDEPATH  += ./  \
+-                ../../external/levmar-2.3/
++                /usr/include/levmar/
+ 
+ win32-msvc2005:QMAKE_CXXFLAGS   +=  /openmp -D_USE_OMP
+ win32-msvc2008:QMAKE_CXXFLAGS   +=  /openmp -D_USE_OMP
+@@ -40,9 +40,9 @@
+ win32-msvc2005:LIBS	+= ../../external/lib/win32-msvc2005/levmar.lib
+ win32-msvc2008:LIBS	+= ../../external/lib/win32-msvc2008/levmar.lib
+ win32-g++:LIBS		+= -L../../external/lib/win32-gcc -llevmar
+-linux-g++:LIBS		+= -L../../external/lib/linux-g++ -llevmar
+-linux-g++-32:LIBS		+= -L../../external/lib/linux-g++-32 -llevmar
+-linux-g++-64:LIBS		+= -L../../external/lib/linux-g++-64 -llevmar
++linux-g++:LIBS		+= -llevmar
++linux-g++-32:LIBS	+= -llevmar
++linux-g++-64:LIBS	+= -llevmar
+ macx:LIBS += ../../external/lib/macx/liblevmar.a
+ 
+ # Please never ever uncomment this...
+diff -urN MeshLabSrc_AllInc_v123a/meshlab/src/meshlabplugins/io_3ds/io_3ds.pro MeshLabSrc_AllInc_v123a-patched/meshlab/src/meshlabplugins/io_3ds/io_3ds.pro
+--- MeshLabSrc_AllInc_v123a/meshlab/src/meshlabplugins/io_3ds/io_3ds.pro	2010-05-05 14:54:07.000000000 +0200
++++ MeshLabSrc_AllInc_v123a-patched/meshlab/src/meshlabplugins/io_3ds/io_3ds.pro	2010-05-16 13:02:34.000000000 +0200
+@@ -14,7 +14,7 @@
+ 
+ TARGET        = io_3ds
+ 
+-INCLUDEPATH += ../../external/lib3ds-1.3.0/
++INCLUDEPATH += /usr/include/lib3ds #../../external/lib3ds-1.3.0/
+ 
+ # Notes on the paths of lib3ds files.
+ # Once you have compiled the library put the lib files in a dir named lib/XXX/ 
+@@ -25,9 +25,9 @@
+ win32-msvc2005:LIBS	+= ../../external/lib/win32-msvc2005/3ds.lib
+ win32-msvc2008:LIBS	+= ../../external/lib/win32-msvc2008/3ds.lib
+ win32-g++:LIBS		+= ../../external/lib/win32-gcc/lib3ds.a
+-linux-g++:LIBS += ../../external/lib/linux-g++/lib3ds.a
+-linux-g++-32:LIBS += ../../external/lib/linux-g++-32/lib3ds.a
+-linux-g++-64:LIBS += ../../external/lib/linux-g++-64/lib3ds.a
++linux-g++:LIBS += -l3ds
++linux-g++-32:LIBS += -l3ds
++linux-g++-64:LIBS += -l3ds
+ 
+ # unix:LIBS		+= -L../../../../code/lib/lib3ds-1.3.0/lib3ds/lib/unix -l3ds
+ 
+diff -urN MeshLabSrc_AllInc_v123a/meshlab/src/meshlabplugins/io_epoch/io_epoch.pro MeshLabSrc_AllInc_v123a-patched/meshlab/src/meshlabplugins/io_epoch/io_epoch.pro
+--- MeshLabSrc_AllInc_v123a/meshlab/src/meshlabplugins/io_epoch/io_epoch.pro	2010-05-05 14:54:07.000000000 +0200
++++ MeshLabSrc_AllInc_v123a-patched/meshlab/src/meshlabplugins/io_epoch/io_epoch.pro	2010-05-16 13:09:22.000000000 +0200
+@@ -30,16 +30,16 @@
+ win32-msvc2005:LIBS	   += ../../external/lib/win32-msvc2005/bz2.lib
+ win32-msvc2008:LIBS	   += ../../external/lib/win32-msvc2008/bz2.lib
+ win32-g++:LIBS	+= ../../external/lib/win32-gcc/libbz2.a
+-linux-g++:LIBS	+= ../../external/lib/linux-g++/libbz2.a
+-linux-g++-32:LIBS	+= ../../external/lib/linux-g++-32/libbz2.a
+-linux-g++-64:LIBS	+= ../../external/lib/linux-g++-64/libbz2.a
++linux-g++:LIBS	+= -lbz2
++linux-g++-32:LIBS	+= -lbz2
++linux-g++-64:LIBS	+= -lbz2
+ 
+ win32-msvc2005:INCLUDEPATH += ../../external/bzip2-1.0.5
+ win32-msvc2008:INCLUDEPATH += ../../external/bzip2-1.0.5
+ win32-g++:INCLUDEPATH  += ../../external/bzip2-1.0.5
+-linux-g++:INCLUDEPATH	+= ../../external/bzip2-1.0.5
+-linux-g++-32:INCLUDEPATH	+= ../../external/bzip2-1.0.5
+-linux-g++-64:INCLUDEPATH	+= ../../external/bzip2-1.0.5
++#linux-g++:INCLUDEPATH	+= ../../external/bzip2-1.0.5
++#linux-g++-32:INCLUDEPATH	+= ../../external/bzip2-1.0.5
++#linux-g++-64:INCLUDEPATH	+= ../../external/bzip2-1.0.5
+ 
+ mac:LIBS   += -lbz2
+ 
+diff -urN MeshLabSrc_AllInc_v123a/meshlab/src/meshlabserver/meshlabserver.pro MeshLabSrc_AllInc_v123a-patched/meshlab/src/meshlabserver/meshlabserver.pro
+--- MeshLabSrc_AllInc_v123a/meshlab/src/meshlabserver/meshlabserver.pro	2010-05-05 14:54:06.000000000 +0200
++++ MeshLabSrc_AllInc_v123a-patched/meshlab/src/meshlabserver/meshlabserver.pro	2010-06-19 18:08:02.000000000 +0200
+@@ -1,4 +1,4 @@
+-GLEWDIR = ../external/glew-1.5.1
++GLEWDIR = /usr/include/GL
+ 
+ HEADERS        = 
+ 
+@@ -20,13 +20,13 @@
+ 
+ win32-msvc2005:  LIBS += -L../distrib -lcommon
+ win32-msvc2008:  LIBS += -L../distrib -lcommon
+-win32-g++:  LIBS += -L../distrib -lcommon
+-linux-g++:  LIBS += -L../distrib -lcommon
+-linux-g++:QMAKE_RPATHDIR += ../distrib
+-linux-g++-32:  LIBS += -L../distrib -lcommon
+-linux-g++-32:QMAKE_RPATHDIR += ../distrib
+-linux-g++-64:  LIBS += -L../distrib -lcommon
+-linux-g++-64:QMAKE_RPATHDIR += ../distrib
++win32-g++:  LIBS += -L../distrib -lcommon 
++linux-g++:  LIBS += -L../distrib -lcommon -L/usr/lib -lGLEW
++linux-g++:QMAKE_RPATHDIR += /usr/lib/meshlab
++linux-g++-32:  LIBS += -L../distrib -lcommon -L/usr/lib -lGLEW
++linux-g++-32:QMAKE_RPATHDIR += /usr/lib/meshlab
++linux-g++-64:  LIBS += -L../distrib -lcommon -L/usr/lib -lGLEW
++linux-g++-64:QMAKE_RPATHDIR += /usr/lib/meshlab
+ #CONFIG (release,debug | release) {
+ #	win32-msvc2005:release:  LIBS += -L../common/release -lcommon
+ #	win32-msvc2008:release:  LIBS += -L../common/release -lcommon
+@@ -38,7 +38,7 @@
+ 
+ #DEFINES += GLEW_STATIC
+ 
+-INCLUDEPATH += . .. ../../../vcglib $$GLEWDIR/include
++INCLUDEPATH += . .. ../../../vcglib $$GLEWDIR
+ CONFIG += stl 
+ CONFIG += console
+ 
+diff -urN MeshLabSrc_AllInc_v123a/meshlab/src/shared.pri MeshLabSrc_AllInc_v123a-patched/meshlab/src/shared.pri
+--- MeshLabSrc_AllInc_v123a/meshlab/src/shared.pri	2010-05-05 14:54:07.000000000 +0200
++++ MeshLabSrc_AllInc_v123a-patched/meshlab/src/shared.pri	2010-05-16 14:39:36.000000000 +0200
+@@ -6,7 +6,7 @@
+ QT += xml
+ 
+ VCGDIR  = ../../../../vcglib
+-GLEWDIR = ../../external/glew-1.5.1
++GLEWDIR = /usr/include/GL
+ 
+ mac:LIBS += ../../common/libcommon.dylib
+ 
+@@ -15,9 +15,9 @@
+ win32-msvc2005:  LIBS += ../../distrib/common.lib
+ win32-msvc2008:  LIBS += ../../distrib/common.lib
+ win32-g++:LIBS += -L../../distrib -lcommon
+-linux-g++:LIBS += -L../../distrib -lcommon
+-linux-g++-32:LIBS += -L../../distrib -lcommon
+-linux-g++-64:LIBS += -L../../distrib -lcommon
++linux-g++:LIBS += -L../../distrib -lcommon -L/usr/lib -lGLEW
++linux-g++-32:LIBS += -L../../distrib -lcommon -L/usr/lib -lGLEW
++linux-g++-64:LIBS += -L../../distrib -lcommon -L/usr/lib -lGLEW
+ 
+ #CONFIG(debug, debug|release) {
+ #	win32-msvc2005:  LIBS += ../../common/debug/common.lib
