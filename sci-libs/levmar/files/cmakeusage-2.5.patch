@@ -1,0 +1,128 @@
+diff -ur levmar-2.5/CMakeLists.txt levmar-2.5.new/CMakeLists.txt
+--- levmar-2.5/CMakeLists.txt	2009-09-01 14:23:07.000000000 +0200
++++ levmar-2.5.new/CMakeLists.txt	2010-05-18 16:58:48.943757800 +0200
+@@ -2,53 +2,50 @@
+ #                        http://www.insightsoftwareconsortium.org/wiki/index.php/CMake_Tutorial
+ 
+ PROJECT(LEVMAR)
+-#CMAKE_MINIMUM_REQUIRED(VERSION 1.4)
++CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+ 
+-# compiler flags
+-#ADD_DEFINITIONS(-DLINSOLVERS_RETAIN_MEMORY) # do not free memory between linear solvers calls
+-#REMOVE_DEFINITIONS(-DLINSOLVERS_RETAIN_MEMORY) # free memory between calls
+-
+-# f2c is sometimes equivalent to libF77 & libI77; in that case, set HAVE_F2C to 0
+-SET(HAVE_F2C 1 CACHE BOOL "Do we have f2c or F77/I77?" )
+-
+-# the directory where the lapack/blas/f2c libraries reside
+-SET(LAPACKBLAS_DIR /usr/lib CACHE PATH "Path to lapack/blas libraries")
+-
+-# actual names for the lapack/blas/f2c libraries
+-SET(LAPACK_LIB lapack CACHE STRING "The name of the lapack library")
+-SET(BLAS_LIB blas CACHE STRING "The name of the blas library")
+-IF(HAVE_F2C)
+-  SET(F2C_LIB f2c CACHE STRING "The name of the f2c library")
+-ELSE(HAVE_F2C)
+-  SET(F77_LIB libF77 CACHE STRING "The name of the F77 library")
+-  SET(I77_LIB libI77 CACHE STRING "The name of the I77 library")
+-ENDIF(HAVE_F2C)
++if(COMMAND cmake_policy)
++  cmake_policy(SET CMP0003 NEW)
++endif(COMMAND cmake_policy)
+ 
+-########################## NO CHANGES BEYOND THIS POINT ##########################
+ 
+-INCLUDE_DIRECTORIES(.)
+-#INCLUDE_DIRECTORIES(/usr/include)
++OPTION(SUPPORT_DOUBLE_PRECICION "support double precicion solver" TRUE)
++OPTION(SUPPORT_SINGLE_PRECICION "support single precicion solver" TRUE)
++OPTION(BUILD_EXAMPLE "build example" FALSE)
++
++IF(SUPPORT_DOUBLE_PRECICION) 
++  ADD_DEFINITIONS(-DLM_DBL_PREC)
++ENDIF(SUPPORT_DOUBLE_PRECICION) 
++
++IF(SUPPORT_SINGLE_PRECICION) 
++  ADD_DEFINITIONS(-DLM_SNGL_PREC)
++ENDIF(SUPPORT_SINGLE_PRECICION) 
++
++ENABLE_LANGUAGE(Fortran)
++
++FIND_PACKAGE(LAPACK REQUIRED)
++IF(LAPACK_FOUND)
++  ADD_DEFINITIONS(-DHAVE_LAPACK)
++ENDIF(LAPACK_FOUND)
+ 
+ # levmar library source files
+-ADD_LIBRARY(levmar STATIC
++ADD_LIBRARY(levmar SHARED
+   lm.c Axb.c misc.c lmlec.c lmbc.c lmblec.c lmbleic.c
+-  levmar.h misc.h compiler.h
+ )
+ 
+-# demo program
+-LINK_DIRECTORIES(${LAPACKBLAS_DIR})
+-LINK_DIRECTORIES(.)
+-ADD_EXECUTABLE(lmdemo lmdemo.c levmar.h)
+-# libraries the demo depends on
+-IF(HAVE_F2C)
+-  TARGET_LINK_LIBRARIES(lmdemo levmar ${LAPACK_LIB} ${BLAS_LIB} ${F2C_LIB})
+-ELSE(HAVE_F2C)
+-  TARGET_LINK_LIBRARIES(lmdemo levmar ${LAPACK_LIB} ${BLAS_LIB} ${F77_LIB} ${I77_LIB})
+-ENDIF(HAVE_F2C)
+-
+-# make sure that the library is built before the demo
+-ADD_DEPENDENCIES(lmdemo levmar)
+-
+-#SUBDIRS(matlab)
++IF(LAPACK_FOUND)
++  LINK_DIRECTORIES(${LAPACK_LINKER_FLAGS})  
++  TARGET_LINK_LIBRARIES(levmar ${LAPACK_LIBRARIES})
++ENDIF(LAPACK_FOUND)
++ 
++IF(BUILD_EXAMPLE)
++  ADD_EXECUTABLE(lmdemo lmdemo.c)
++  TARGET_LINK_LIBRARIES(lmdemo levmar)
++ENDIF(BUILD_EXAMPLE)
++
++INSTALL(TARGETS levmar 
++  RUNTIME DESTINATION "bin"
++  LIBRARY DESTINATION "lib"
++  ARCHIVE DESTINATION "lib")
+ 
+-#ADD_TEST(levmar_tst lmdemo)
++INSTALL(FILES levmar.h DESTINATION "include")
+diff -ur levmar-2.5/levmar.h levmar-2.5.new/levmar.h
+--- levmar-2.5/levmar.h	2009-12-02 11:23:35.000000000 +0100
++++ levmar-2.5.new/levmar.h	2010-05-18 16:43:24.986917129 +0200
+@@ -26,7 +26,7 @@
+ /************************************* Start of configuration options *************************************/
+ 
+ /* specify whether to use LAPACK or not. The first option is strongly recommended */
+-#define HAVE_LAPACK /* use LAPACK */
++//#define HAVE_LAPACK /* use LAPACK */
+ /* #undef HAVE_LAPACK */  /* uncomment this to force not using LAPACK */
+ 
+ /* to avoid the overhead of repeated mallocs(), routines in Axb.c can be instructed to
+@@ -34,15 +34,15 @@
+  * non-reentrant and is not safe in a shared memory multiprocessing environment.
+  * Bellow, this option is turned on only when not compiling with OpenMP.
+  */
+-#if !defined(_OPENMP) 
+-#define LINSOLVERS_RETAIN_MEMORY /* comment this if you don't want routines in Axb.c retain working memory between calls */
+-#endif
++//#if !defined(_OPENMP) 
++//#define LINSOLVERS_RETAIN_MEMORY /* comment this if you don't want routines in Axb.c retain working memory between calls */
++//#endif
+ 
+ /* determine the precision variants to be build. Default settings build
+  * both the single and double precision routines
+  */
+-#define LM_DBL_PREC  /* comment this if you don't want the double precision routines to be compiled */
+-#define LM_SNGL_PREC /* comment this if you don't want the single precision routines to be compiled */
++//#define LM_DBL_PREC  /* comment this if you don't want the double precision routines to be compiled */
++//#define LM_SNGL_PREC /* comment this if you don't want the single precision routines to be compiled */
+ 
+ /****************** End of configuration options, no changes necessary beyond this point ******************/
+ 

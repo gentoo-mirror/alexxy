@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <herd>sci</herd>
+  <maintainer>
+    <email>gw.fossdev@gmail.com</email>
+    <name>Gert Wollny</name>
+  </maintainer>
+<longdescription>
+  levmar is a C/C++ implementation of the Levenberg-Marquard optimization algorithm 
+</longdescription>
+<use>
+  <flag name='nosingle'>Build and install without support for single precicion math</flag>
+  <flag name='nodouble'>Build and install without support for double precicion math</flag>
+  <flag name='examples'>Build the example to test the compile and install its source</flag>
+</use>
+</pkgmetadata>
