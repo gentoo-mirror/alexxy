@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit gnome2
+inherit gnome2 autotools
 
 MY_PN="${PN/nm-applet/network-manager-applet}"
 
@@ -16,7 +16,7 @@ SLOT="0"
 IUSE="bluetooth"
 if [[ ${PV} = 9999 ]]; then
 	inherit git
-	EGIT_REPO_URI="${EGIT_REPO_URI//${PN}/${MY_PN}}"
+	EGIT_REPO_URI="git://git.gnome.org/${MY_PN}"
 	SRC_URI=""
 	KEYWORDS=""
 else
@@ -47,6 +47,12 @@ DOCS="AUTHORS ChangeLog NEWS README"
 # USE_DESTDIR="1"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
+
+src_prepare() {
+		gtkdocize
+		intltoolize --force
+		eautoreconf
+}
 
 pkg_setup() {
 	G2CONF="${G2CONF}
