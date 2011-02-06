@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/net-misc/networkmanager/networkmanager-0.8.1-r6.ebuild,v 1.2 2010/08/23 23:12:24 dagger Exp $
 
-EAPI="2"
+EAPI="4"
 
 inherit autotools eutils gnome.org linux-info git
 
@@ -18,7 +18,7 @@ EGIT_REPO_URI="git://anongit.freedesktop.org/${MY_PN}/${MY_PN}"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~ppc ~ppc64 ~x86"
-IUSE="avahi bluetooth doc nss gnutls dhclient dhcpcd kernel_linux resolvconf connection-sharing"
+IUSE="avahi bluetooth doc nss gnutls dhclient dhcpcd kernel_linux resolvconf connection-sharing wimax"
 
 RDEPEND=">=sys-apps/dbus-1.2
 	>=dev-libs/dbus-glib-0.75
@@ -44,7 +44,11 @@ RDEPEND=">=sys-apps/dbus-1.2
 	resolvconf? ( net-dns/openresolv )
 	connection-sharing? (
 		net-dns/dnsmasq
-		net-firewall/iptables )"
+		net-firewall/iptables )
+	wimax? ( 
+			net-wireless/wimax-tools
+			net-wireless/wimax
+			)"
 
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig
