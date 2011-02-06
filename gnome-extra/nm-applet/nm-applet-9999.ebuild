@@ -30,14 +30,12 @@ RDEPEND=">=dev-libs/glib-2.16
 	>=sys-apps/dbus-1.2.6
 	>=x11-libs/gtk+-2.20:2
 	>=gnome-base/gconf-2.20
-	>=gnome-extra/polkit-gnome-0.92
 	>=x11-libs/libnotify-0.3
 	>=gnome-base/gnome-keyring-2.20
 	>=dev-libs/libnl-1.1
 	>=net-misc/networkmanager-${PV}
 	>=net-wireless/wireless-tools-28_pre9
 	>=net-wireless/wpa_supplicant-0.5.7
-	|| ( >=gnome-base/gnome-panel-2 xfce-base/xfce4-panel x11-misc/trayer )
 	net-misc/mobile-broadband-provider-info
 	bluetooth? ( >=net-wireless/gnome-bluetooth-2.27.6 )"
 
