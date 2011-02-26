@@ -1,0 +1,13 @@
+link_ppp17="/dev/null"
+username_ppp17='pva0xd'
+password_ppp17='3149068110'
+pppd_ppp17="
+plugin pptp.so
+pptp_server 78.31.23.148
+file /etc/ppp/options.pptp
+mtu 1436
+mru 1436
+lcp-echo-interval 20
+lcp-echo-failure  3
+"
+
