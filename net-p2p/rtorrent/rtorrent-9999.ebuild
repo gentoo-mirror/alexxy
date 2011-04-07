@@ -4,12 +4,11 @@
 
 EAPI="4"
 
-inherit subversion
+inherit subversion autotools
 
 DESCRIPTION="BitTorrent Client using libtorrent"
 HOMEPAGE="http://libtorrent.rakshasa.no"
 ESVN_REPO_URI="svn://rakshasa.no/libtorrent/trunk/rtorrent"
-ESVN_BOOTSTRAP="autogen.sh"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -24,6 +23,10 @@ DEPEND="
 	xmlrpc? ( dev-libs/xmlrpc-c )"
 RDEPEND="${DEPEND}
 	daemon? ( app-misc/screen )"
+
+src_prepare() {
+	eautoreconf
+}
 
 src_configure() {
 	econf \

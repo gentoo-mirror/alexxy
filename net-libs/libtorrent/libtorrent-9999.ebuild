@@ -4,12 +4,11 @@
 
 EAPI="4"
 
-inherit subversion
+inherit subversion autotools
 
 DESCRIPTION="LibTorrent is a BitTorrent library written in C++ for *nix."
 HOMEPAGE="http://libtorrent.rakshasa.no"
 ESVN_REPO_URI="svn://rakshasa.no/libtorrent/trunk/libtorrent"
-ESVN_BOOTSTRAP="autogen.sh"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -20,6 +19,10 @@ DEPEND="${RDEPEND}
 		dev-util/pkgconfig"
 RDEPEND="
 		>=dev-libs/libsigc++-2.2.2"
+
+src_prepare() {
+	eautoreconf
+}
 
 src_configure() {
 	econf \
