@@ -14,7 +14,7 @@ SRC_URI="http://github.com/downloads/behlendorf/${PN}/${P/_/-}.tar.gz"
 
 LICENSE="CDDL GPL-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND=">=sys-devel/spl-${PV}

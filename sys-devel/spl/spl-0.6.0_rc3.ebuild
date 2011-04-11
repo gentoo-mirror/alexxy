@@ -14,7 +14,7 @@ SRC_URI="http://github.com/downloads/behlendorf/${PN}/${P/_/-}.tar.gz"
 
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND=">=virtual/linux-sources-2.6.32"
