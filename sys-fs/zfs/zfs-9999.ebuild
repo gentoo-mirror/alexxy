@@ -27,7 +27,6 @@ RDEPEND="${DEPEND}
 	!sys-fs/zfs-fuse"
 
 src_prepare() {
-	epatch "${FILESDIR}"/${PN}-0.6.0-linking.patch
 	epatch "${FILESDIR}"/${PN}-0.6.0-includedir.patch
 	eautoreconf
 }

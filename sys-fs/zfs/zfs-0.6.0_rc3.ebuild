@@ -25,8 +25,7 @@ RDEPEND="${DEPEND}
 S="${WORKDIR}/${P/_/-}"
 
 src_prepare() {
-	epatch "${FILESDIR}"/${PN}-0.6.0-linking.patch \
-			"${FILESDIR}"/${PN}-0.6.0-includedir.patch
+	epatch 	"${FILESDIR}/${PN}-0.6.0-includedir.patch"
 	eautoreconf
 }
 
