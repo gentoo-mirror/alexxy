@@ -1,8 +1,8 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="4"
 
 inherit linux-mod eutils autotools multilib
 
@@ -19,9 +19,8 @@ COMMON_DEPEND=">=net-dialup/ppp-2.4.2
 	server? ( !net-dialup/pptpd )
 	tcpd? ( sys-apps/tcp-wrappers )"
 DEPEND="${COMMON_DEPEND}
-	>=virtual/linux-sources-2.6.15"
-RDEPEND="${COMMON_DEPEND}
-	virtual/modutils"
+	>=virtual/linux-sources-2.6"
+RDEPEND="${COMMON_DEPEND}"
 
 BUILD_TARGETS="all"
 BUILD_PARAMS="KDIR=${KERNEL_DIR}"
