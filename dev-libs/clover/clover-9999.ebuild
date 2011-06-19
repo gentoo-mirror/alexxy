@@ -30,5 +30,5 @@ src_unpack() {
 src_install() {
 	cmake-utils_src_install
 	insinto /usr/include
-	doins -r includes/CL
+	doins -r "${S}/includes/CL"
 }
