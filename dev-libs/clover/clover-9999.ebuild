@@ -26,3 +26,9 @@ src_unpack() {
 	default
 	[[ $PV = 9999* ]] && git-2_src_unpack
 }
+
+src_install() {
+	cmake-utils_src_install
+	insinto /usr/include
+	doins -r includes/CL
+}
