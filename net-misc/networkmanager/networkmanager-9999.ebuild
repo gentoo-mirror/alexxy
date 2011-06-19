@@ -91,9 +91,9 @@ pkg_setup() {
 }
 
 src_prepare() {
-	#Fix up the dbus conf file to use plugdev group
 	gtkdocize
 	intltoolize --force
+	eautopoint
 	eautoreconf
 }
 
