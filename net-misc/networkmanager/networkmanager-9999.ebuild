@@ -1,61 +1,66 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-misc/networkmanager/networkmanager-0.8.1-r6.ebuild,v 1.2 2010/08/23 23:12:24 dagger Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-misc/networkmanager/networkmanager-0.8.995.ebuild,v 1.1 2011/03/09 07:56:21 qiaomuf Exp $
 
 EAPI="4"
 
-inherit autotools eutils gnome.org linux-info git
+inherit autotools git-2 eutils linux-info
+# gnome.org
+# once 0.9 is released add gnome.org eclass back
 
 # NetworkManager likes itself with capital letters
 MY_PN=${PN/networkmanager/NetworkManager}
-MY_P=${MY_PN}-${PV}
+# Use 0.9 beta/rc rather then 0.8.9xx
+MY_PV=${PV/0.9_rc2/0.8.999}
+MY_P=${MY_PN}-${MY_PV}
 
-SRC_URI=""
 DESCRIPTION="Network configuration and management in an easy way. Desktop environment independent."
 HOMEPAGE="http://www.gnome.org/projects/NetworkManager/"
 EGIT_REPO_URI="git://anongit.freedesktop.org/${MY_PN}/${MY_PN}"
+SRC_URI="http://dev.gentoo.org/~dagger/files/ifnet-0.9.tar.bz2"
+
+# Change once 0.9 is released
+#SRC_URI="${SRC_URI//${PN}/${MY_PN}}
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~ppc ~ppc64 ~x86"
-IUSE="avahi bluetooth doc nss gnutls dhclient dhcpcd kernel_linux resolvconf connection-sharing wimax"
+KEYWORDS="~amd64 ~arm ~x86"
+IUSE="avahi bluetooth doc +nss gnutls dhclient +dhcpcd +introspection kernel_linux +ppp resolvconf connection-sharing wimax"
+
+REQUIRED_USE="
+	nss? ( !gnutls ) !nss? ( gnutls )
+	dhcpcd? ( !dhclient ) !dhcpcd? ( dhclient )"
 
 RDEPEND=">=sys-apps/dbus-1.2
 	>=dev-libs/dbus-glib-0.75
 	>=net-wireless/wireless-tools-28_pre9
-	>=sys-fs/udev-145[extras]
-	>=dev-libs/glib-2.18
-	>=sys-auth/polkit-0.92
+	>=sys-fs/udev-147[extras]
+	>=dev-libs/glib-2.26
+	>=sys-auth/polkit-0.96
 	>=dev-libs/libnl-1.1
-	>=net-misc/modemmanager-0.2
-	>=net-wireless/wpa_supplicant-0.5.10[dbus]
-	bluetooth? ( net-wireless/bluez )
-	|| ( sys-libs/e2fsprogs-libs <sys-fs/e2fsprogs-1.41.0 )
+	>=net-misc/modemmanager-0.4
+	>=net-wireless/wpa_supplicant-0.7.2[dbus]
+	bluetooth? ( >=net-wireless/bluez-4.82 )
 	avahi? ( net-dns/avahi[autoipd] )
 	gnutls? (
-		nss? ( >=dev-libs/nss-3.11 )
-		!nss? ( dev-libs/libgcrypt
-			net-libs/gnutls ) )
-	!gnutls? ( >=dev-libs/nss-3.11 )
-	dhclient? (
-		dhcpcd? ( >=net-misc/dhcpcd-4.0.0_rc3 )
-		!dhcpcd? ( net-misc/dhcp ) )
-	!dhclient? ( >=net-misc/dhcpcd-4.0.0_rc3 )
+		dev-libs/libgcrypt
+		net-libs/gnutls )
+	nss? ( >=dev-libs/nss-3.11 )
+	dhclient? ( net-misc/dhcp )
+	dhcpcd? ( >=net-misc/dhcpcd-4.0.0_rc3 )
+	introspection? ( >=dev-libs/gobject-introspection-0.10.3 )
+	ppp? ( >=net-dialup/ppp-2.4.5 )
 	resolvconf? ( net-dns/openresolv )
 	connection-sharing? (
 		net-dns/dnsmasq
 		net-firewall/iptables )
-	wimax? ( 
-			net-wireless/wimax-tools
-			net-wireless/wimax
-			)"
+	wimax? ( >=net-wireless/wimax-1.5.1 )"
 
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig
 	dev-util/intltool
-	>=net-dialup/ppp-2.4.5
 	>=dev-util/gtk-doc-1.15
-	doc? ( >=dev-util/gtk-doc-1.15 )"
+	doc? ( >=dev-util/gtk-doc-1.8 )"
 
 S=${WORKDIR}/${MY_P}
 
@@ -72,7 +77,6 @@ sysfs_deprecated_check() {
 }
 
 pkg_setup() {
-
 	if use kernel_linux; then
 		get_version
 		if linux_config_exists; then
@@ -87,8 +91,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Fix up the dbus conf file to use plugdev group
-	epatch "${FILESDIR}/${PN}-0.8.1-confchanges.patch"
+	#Fix up the dbus conf file to use plugdev group
 	gtkdocize
 	intltoolize --force
 	eautoreconf
@@ -102,37 +105,25 @@ src_configure() {
 		--with-udev-dir=/etc/udev
 		--with-iptables=/sbin/iptables
 		$(use_enable doc gtk-doc)
+		$(use_enable introspection)
+		$(use_enable ppp)
+		$(use_enable wimax)
+		$(use_with dhclient)
+		$(use_with dhcpcd)
 		$(use_with doc docs)
 		$(use_with resolvconf)"
 
-	# default is dhcpcd (if none or both are specified), ISC dchclient otherwise
-	if use dhclient ; then
-		if use dhcpcd ; then
-			ECONF="${ECONF} --with-dhcpcd --without-dhclient"
-		else
-			ECONF="${ECONF} --with-dhclient --without-dhcpcd"
-		fi
-	else
-		ECONF="${ECONF} --with-dhcpcd --without-dhclient"
-	fi
-
-	# default is NSS (if none or both are specified), GnuTLS otherwise
-	if use gnutls ; then
 		if use nss ; then
-			ECONF="${ECONF} --with-crypto=nss"
+			ECONF="${ECONF} $(use_with nss crypto=nss)"
 		else
-			ECONF="${ECONF} --with-crypto=gnutls"
+			ECONF="${ECONF} $(use_with gnutls crypto=gnutls)"
 		fi
-	else
-		ECONF="${ECONF} --with-crypto=nss"
-	fi
 
 	econf ${ECONF}
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die "emake install failed"
-
+	default
 	# Need to keep the /var/run/NetworkManager directory
 	keepdir /var/run/NetworkManager
 
