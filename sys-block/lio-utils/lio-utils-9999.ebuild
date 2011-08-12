@@ -73,9 +73,15 @@ src_install(){
 		ln -s "${sitedir}"/lio_node.py \
 				"${ED}"/usr/sbin/lio_node-${ver}
 		python_convert_shebangs "${ver}" "${D}${sitedir}"/lio_node.py
+		ln -s "${sitedir}"/tcm_dump.py \
+			"${ED}"/usr/sbin/tcm_dump-${ver}
+		python_convert_shebangs "${ver}" "${D}${sitedir}"/tcm_dump.py
+		ln -s "${sitedir}"/tcm_node.py \
+			"${ED}"/usr/sbin/tcm_node-${ver}
+		python_convert_shebangs "${ver}" "${D}${sitedir}"/tcm_node.py
 	}
 	python_execute_function --action-message "Making symlinks to /usr/sbin" symlink_to_sbin
-	python_generate_wrapper_scripts "${ED}"/usr/sbin/{lio_dump,lio_node}
+	python_generate_wrapper_scripts "${ED}"/usr/sbin/{lio_dump,lio_node,tcm_node,tcm_dump}
 
 	if use snmp; then
 		cd mib-modules/
