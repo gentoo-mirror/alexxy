@@ -21,6 +21,7 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND="
+	dev-python/configobj
 	dev-python/ipaddr
 	dev-python/netifaces
 	"
