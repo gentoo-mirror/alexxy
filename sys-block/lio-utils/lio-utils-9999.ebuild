@@ -9,7 +9,7 @@ PYTHON_DEPEND="2"
 RESTRICT_PYTHON_ABIS="3.*"
 SUPPORT_PYTHON_ABIS="1"
 
-inherit eutils distutils git-2 python
+inherit eutils distutils git-2 python linux-info
 
 DESCRIPTION="Tools for controlling target_core_mod/ConfigFS"
 HOMEPAGE="http://linux-iscsi.org/"
@@ -22,6 +22,8 @@ IUSE="snmp"
 
 DEPEND="snmp? ( net-analyzer/net-snmp )"
 RDEPEND="${DEPEND}"
+
+CONFIG_CHECK="~TARGET_CORE"
 
 src_prepare(){
 	local module
