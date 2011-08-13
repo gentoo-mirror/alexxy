@@ -20,5 +20,8 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="dev-python/ipaddr"
+DEPEND="
+	dev-python/ipaddr
+	dev-python/netifaces
+	"
 RDEPEND="${DEPEND}"
