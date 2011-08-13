@@ -22,6 +22,6 @@ IUSE=""
 
 DEPEND="
 	dev-python/epydoc
-	dev-python/configobj
+	dev-python/simpleparse
 	"
 RDEPEND="${DEPEND}"
