@@ -4,7 +4,7 @@
 
 EAPI=3
 
-EGIT_REPO_URI="git://linux-iscsi.org/rtslib.git"
+EGIT_REPO_URI="git://linux-iscsi.org/${PN}.git"
 PYTHON_DEPEND="2"
 RESTRICT_PYTHON_ABIS="3.*"
 SUPPORT_PYTHON_ABIS="1"
