@@ -21,6 +21,7 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND="
+	dev-python/configshell
 	dev-python/rtslib
 	"
 RDEPEND="${DEPEND}"
