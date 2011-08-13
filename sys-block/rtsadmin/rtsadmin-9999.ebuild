@@ -9,7 +9,7 @@ PYTHON_DEPEND="2"
 RESTRICT_PYTHON_ABIS="3.*"
 SUPPORT_PYTHON_ABIS="1"
 
-inherit eutils distutils git-2 python
+inherit eutils distutils git-2 python linux-info
 
 DESCRIPTION="RTSAdmin Community Edition for target_core_mod/ConfigFS"
 HOMEPAGE="http://linux-iscsi.org/"
@@ -26,3 +26,5 @@ DEPEND="
 	sys-block/lio-utils
 	"
 RDEPEND="${DEPEND}"
+
+CONFIG_CHECK="~TARGET_CORE"
