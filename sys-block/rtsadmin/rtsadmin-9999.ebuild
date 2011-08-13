@@ -28,3 +28,9 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 CONFIG_CHECK="~TARGET_CORE"
+
+src_install() {
+	default
+	keepdir /var/target/
+	keepdir /var/target/fabric
+}
