@@ -19,7 +19,7 @@ COMMON_DEPEND=">=net-dialup/ppp-2.4.2
 	server? ( !net-dialup/pptpd )
 	tcpd? ( sys-apps/tcp-wrappers )"
 DEPEND="${COMMON_DEPEND}
-	>=virtual/linux-sources-2.6"
+	virtual/linux-sources"
 RDEPEND="${COMMON_DEPEND}"
 
 BUILD_TARGETS="all"
