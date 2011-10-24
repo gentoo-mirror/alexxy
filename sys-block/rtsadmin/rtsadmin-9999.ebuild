@@ -23,14 +23,13 @@ IUSE=""
 DEPEND="
 	dev-python/configshell
 	dev-python/rtslib
-	sys-block/lio-utils
 	"
 RDEPEND="${DEPEND}"
 
 CONFIG_CHECK="~TARGET_CORE"
 
 src_install() {
-	default
+	distutils-src_install
 	keepdir /var/target/
 	keepdir /var/target/fabric
 }
