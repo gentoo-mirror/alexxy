@@ -29,7 +29,7 @@ RDEPEND="${DEPEND}"
 CONFIG_CHECK="~TARGET_CORE"
 
 src_install() {
-	distutils-src_install
+	distutils_src_install
 	keepdir /var/target/
 	keepdir /var/target/fabric
 }
