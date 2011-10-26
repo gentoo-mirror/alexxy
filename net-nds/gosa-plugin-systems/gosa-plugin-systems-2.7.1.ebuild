@@ -4,36 +4,8 @@
 
 EAPI=4
 
-DESCRIPTION="GOsa plugin for common systems integration"
-HOMEPAGE="https://oss.gonicus.de/labs/gosa/wiki/WikiStart."
-SRC_URI="http://oss.gonicus.de/pub/gosa/${P}.tar.bz2"
+inherit gosa-plugin
 
-LICENSE="GPL-3"
-SLOT="0"
+DESCRIPTION="GOsa plugin for common systems integration"
 KEYWORDS="~amd64"
 IUSE=""
-
-DEPEND=""
-RDEPEND="~net-nds/gosa-core-${PV}"
-
-GOSA_COMPONENT="${PN/gosa-plugin-}"
-
-src_install() {
-	insinto /usr/share/gosa/html/plugins/${GOSA_COMPONENT}/
-	doins -r html/*
-
-	insinto /usr/share/gosa/locale/plugins/${GOSA_COMPONENT}/
-	doins -r locale/*
-
-	insinto /usr/share/gosa/plugins
-	doins -r admin
-
-	insinto /usr/share/gosa/doc/plugins/${GOSA_COMPONENT}/
-	doins -r help/*
-}
-
-pkg_postinst() {
-	ebegin "Updating class cache and locales"
-	"${EROOT}"usr/sbin/update-gosa
-	eend $?
-}
