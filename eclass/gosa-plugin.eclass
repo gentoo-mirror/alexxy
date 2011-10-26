@@ -37,6 +37,12 @@ GOSA_COMPONENT="${PN/gosa-plugin-}"
 # @DESCRIPTION:
 # Default src_install function for gosa-plugins
 gosa-plugin_src_install() {
+
+	if [ -d etc ]; then
+		insinto /etc/gosa
+		doins -r etc/*
+	fi
+
 	insinto /usr/share/gosa/html/plugins/${GOSA_COMPONENT}/
 	doins -r html/*
 
@@ -44,12 +50,21 @@ gosa-plugin_src_install() {
 	doins -r locale/*
 
 	insinto /usr/share/gosa/plugins
-	doins -r admin personal
+	doins -r admin
+	if [ -d personal ]; then
+		doins -r personal
+	fi
+	if [ -d addons ]; then
+		doins -r addons
+	fi
 
 	insinto /usr/share/gosa/doc/plugins/${GOSA_COMPONENT}/
 	doins -r help/*
 
-	dodoc contrib/*
+	if [ -d contrib ]; then
+		dodoc contrib/*
+		insinto /usr/share/doc/${PF}
+	fi
 }
 
 # @FUNCTION: gosa-plugin_pkg_postinst()
