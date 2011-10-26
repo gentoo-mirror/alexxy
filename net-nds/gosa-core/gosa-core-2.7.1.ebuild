@@ -47,7 +47,6 @@ src_install() {
 
 	dobin \
 		update-locale \
-		update-online-help \
 		update-pdf-help \
 		dh-make-gosa \
 		contrib/gosa
