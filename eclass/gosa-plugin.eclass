@@ -58,8 +58,10 @@ gosa-plugin_src_install() {
 		doins -r addons
 	fi
 
-	insinto /usr/share/gosa/doc/plugins/${GOSA_COMPONENT}/
-	doins -r help/*
+	if [ -d help ]; then
+		insinto /usr/share/gosa/doc/plugins/${GOSA_COMPONENT}/
+		doins -r help/*
+	fi
 
 	if [ -d contrib ]; then
 		dodoc contrib/*
