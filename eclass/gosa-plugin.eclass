@@ -64,8 +64,8 @@ gosa-plugin_src_install() {
 	fi
 
 	if [ -d contrib ]; then
-		dodoc contrib/*
 		insinto /usr/share/doc/${PF}
+		doins -r contrib/*
 	fi
 }
 
