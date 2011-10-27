@@ -16,7 +16,8 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="mail samba"
 
-DEPEND="dev-lang/php[iconv,imap,ldap,mysql,session,zip]
+DEPEND="
+	dev-lang/php[curl,calendar,iconv,imap,ldap,mysql,session,zip]
 	sys-devel/gettext"
 RDEPEND="${DEPEND}
 	virtual/httpd-php
