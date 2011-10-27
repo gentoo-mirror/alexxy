@@ -43,8 +43,10 @@ gosa-plugin_src_install() {
 		doins -r etc/*
 	fi
 
-	insinto /usr/share/gosa/html/plugins/${GOSA_COMPONENT}/
-	doins -r html/*
+	if [ -d html ]; then
+		insinto /usr/share/gosa/html/plugins/${GOSA_COMPONENT}/
+		doins -r html/*
+	fi
 
 	insinto /usr/share/gosa/locale/plugins/${GOSA_COMPONENT}/
 	doins -r locale/*
