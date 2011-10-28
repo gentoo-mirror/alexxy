@@ -52,7 +52,9 @@ gosa-plugin_src_install() {
 	doins -r locale/*
 
 	insinto /usr/share/gosa/plugins
-	doins -r admin
+	if [ -d admin ]; then
+		doins -r admin
+	f:
 	if [ -d personal ]; then
 		doins -r personal
 	fi
