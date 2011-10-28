@@ -54,7 +54,7 @@ gosa-plugin_src_install() {
 	insinto /usr/share/gosa/plugins
 	if [ -d admin ]; then
 		doins -r admin
-	f:
+	fi
 	if [ -d personal ]; then
 		doins -r personal
 	fi
