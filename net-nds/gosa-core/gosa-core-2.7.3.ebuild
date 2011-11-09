@@ -28,9 +28,7 @@ PDEPEND="mail? ( ~net-nds/gosa-plugin-mail-${PV} )
 S="${WORKDIR}/gosa/${PN}"
 
 src_prepare() {
-	epatch \
-		"${S}/redhat/02_fix_class_mapping.patch" \
-		"${S}/redhat/03_fix_locale_location.patch"
+	epatch "${FILESDIR}/${P}-gentoo.patch"
 	sed -i \
 		-e 's|../contrib|/usr/share/gosa/template|' \
 		include/functions.inc || die "sed failed"
