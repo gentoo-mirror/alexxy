@@ -17,6 +17,7 @@ IUSE="mail samba"
 
 DEPEND="
 	dev-lang/php[curl,calendar,iconv,imap,ldap,mysql,session,zip]
+	dev-php/smarty
 	sys-devel/gettext"
 RDEPEND="${DEPEND}
 	virtual/httpd-php
