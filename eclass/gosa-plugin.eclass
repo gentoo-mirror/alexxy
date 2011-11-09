@@ -12,7 +12,7 @@ inherit base eutils
 EXPORT_FUNCTIONS src_install pkg_postinst
 
 HOMEPAGE="https://oss.gonicus.de/labs/gosa/wiki/WikiStart"
-SRC_URI="http://oss.gonicus.de/pub/gosa/${P}.tar.bz2"
+SRC_URI="http://oss.gonicus.de/pub/gosa/${P}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 
