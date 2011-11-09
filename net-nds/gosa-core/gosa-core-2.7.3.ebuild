@@ -25,6 +25,8 @@ RDEPEND="${DEPEND}
 PDEPEND="mail? ( ~net-nds/gosa-plugin-mail-${PV} )
 	samba? ( ~net-nds/gosa-plugin-samba-${PV} )"
 
+S="${WORKDIR}/gosa/${PN}"
+
 src_prepare() {
 	epatch \
 		"${S}/redhat/02_fix_class_mapping.patch" \
