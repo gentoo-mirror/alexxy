@@ -33,6 +33,8 @@ fi
 
 GOSA_COMPONENT="${PN/gosa-plugin-}"
 
+S="${WORKDIR}/gosa/${GOSA_COMPONENT}"
+
 # @FUNCTION: gosa-plugin_src_install
 # @DESCRIPTION:
 # Default src_install function for gosa-plugins
