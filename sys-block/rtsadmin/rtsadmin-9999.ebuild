@@ -23,6 +23,7 @@ IUSE=""
 DEPEND="
 	dev-python/configshell
 	dev-python/rtslib
+	sys-block/lio-utils
 	"
 RDEPEND="${DEPEND}"
 
