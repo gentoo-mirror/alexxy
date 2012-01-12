@@ -26,3 +26,10 @@ DEPEND="
 	dev-python/netifaces
 	"
 RDEPEND="${DEPEND}"
+
+src_install() {
+	distutils_src_install
+	keepdir /var/target/fabric
+	insinto /var/target/fabric
+	doins spec/*.spec
+}
