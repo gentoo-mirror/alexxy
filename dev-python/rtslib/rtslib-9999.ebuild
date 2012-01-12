@@ -31,5 +31,5 @@ src_install() {
 	distutils_src_install
 	keepdir /var/target/fabric
 	insinto /var/target/fabric
-	doins spec/*.spec
+	doins specs/*.spec
 }
