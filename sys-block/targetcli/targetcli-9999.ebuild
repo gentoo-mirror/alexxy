@@ -9,9 +9,9 @@ PYTHON_DEPEND="2"
 RESTRICT_PYTHON_ABIS="3.*"
 SUPPORT_PYTHON_ABIS="1"
 
-inherit eutils distutils git-2 python
+inherit eutils distutils git-2 python linux-info
 
-DESCRIPTION="RTSLib Community Edition for target_core_mod/ConfigFS"
+DESCRIPTION="The targetcli administration shell"
 HOMEPAGE="http://linux-iscsi.org/"
 SRC_URI=""
 
@@ -21,15 +21,9 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND="
-	dev-python/configobj
-	dev-python/ipaddr
-	dev-python/netifaces
+	dev-python/configshell
+	dev-python/rtslib
 	"
 RDEPEND="${DEPEND}"
 
-src_install() {
-	distutils_src_install
-	keepdir /var/target/fabric
-	insinto /var/target/fabric
-	doins specs/*.spec
-}
+CONFIG_CHECK="~TARGET_CORE"
