@@ -81,9 +81,12 @@ src_install(){
 		ln -s "${sitedir}"/tcm_node.py \
 			"${ED}"/usr/sbin/tcm_node-${ver}
 		python_convert_shebangs "${ver}" "${D}${sitedir}"/tcm_node.py
+		ln -s "${sitedir}"/tcm_fabric.py \
+			"${ED}"/usr/sbin/tcm_fabric-${ver}
+		python_convert_shebangs "${ver}" "${D}${sitedir}"/tcm_fabric.py
 	}
 	python_execute_function --action-message "Making symlinks to /usr/sbin" symlink_to_sbin
-	python_generate_wrapper_scripts "${ED}"/usr/sbin/{lio_dump,lio_node,tcm_node,tcm_dump}
+	python_generate_wrapper_scripts "${ED}"/usr/sbin/{lio_dump,lio_node,tcm_node,tcm_dump,tcm_fabric}
 
 	if use snmp; then
 		cd mib-modules/
@@ -92,5 +95,5 @@ src_install(){
 	fi
 
 	emake DESTDIR="${ED}" conf_install || die "emake conf_install failed"
-	#Handle initscripts here
+	newinitd "${FILESDIR}/target.initd" target
 }
