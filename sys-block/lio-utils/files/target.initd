@@ -126,12 +126,12 @@ stop() {
 }
 
 status() {
-	einfo "Target core mode status"
-	tcm_node --listhbas
-	einfo ""
-	einfo "Linux iSCSI status"
-	lio_node --listendpoints
-	einfo ""
-	lio_node --version
-	tcm_node --version
+	if [ -f ${TCM_CFS_DIR} && -f ${LIO_CFS_DIR} ]; then
+		einfo "Target core mode status"
+		${TCM_NODE} --listhbas
+		einfo "Linux iSCSI status"
+		${LIO_NODE} --listendpoints
+	else
+		einfo "Target not started (yet)"
+	fi
 }
