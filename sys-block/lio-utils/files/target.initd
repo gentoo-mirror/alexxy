@@ -126,7 +126,7 @@ stop() {
 }
 
 status() {
-	if [ -f ${TCM_CFS_DIR} && -f ${LIO_CFS_DIR} ]; then
+	if [[ -d ${TCM_CFS_DIR} && -d ${LIO_CFS_DIR} ]]; then
 		einfo "Target core mode status"
 		${TCM_NODE} --listhbas
 		einfo "Linux iSCSI status"
