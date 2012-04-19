@@ -14,7 +14,7 @@ SRC_URI="http://www.sassena.org/software/source-code/releases/v${PV}/${MY_P}.tar
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86 ~amd64-linux"
 IUSE=""
 
 DEPEND="
