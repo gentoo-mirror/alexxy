@@ -95,6 +95,7 @@ RDEPEND="${EXTERNAL_DEPEND}
 	classic? ( app-admin/eselect-mesa )
 	gallium? ( app-admin/eselect-mesa )
 	>=app-admin/eselect-opengl-1.2.2
+	app-admin/eselect-opencl
 	dev-libs/expat
 	gbm? ( sys-fs/udev )
 	>=x11-libs/libX11-1.3.99.901
@@ -349,6 +350,14 @@ src_install() {
 				fi
 			done
 			popd
+		eend $?
+	fi
+
+	if use opencl; then
+		ebegin "Moving Gallium/Clover OpenCL implentation for dynamic switching"
+		if [ -f "${ED}/usr/$(get_libdir)/libOpenCL.so" ]; then
+			mv -f "${ED}"/usr/$(get_libdir)/libOpenCL.so* "${ED}"/usr/$(get_libdir)/OpenCL/vendors/mesa
+		fi
 		eend $?
 	fi
 }
