@@ -1,10 +1,8 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI=4
-
-use opencl && EGIT_BRANCH="gallium-compute"
 
 EGIT_REPO_URI="git://anongit.freedesktop.org/mesa/mesa"
 
@@ -50,18 +48,19 @@ done
 
 IUSE="${IUSE_VIDEO_CARDS}
 	bindist +classic d3d debug +egl g3dvl +gallium gbm gles1 gles2 +llvm +nptl
-	opencl openvg osmesa pax_kernel pic selinux +shared-glapi vdpau wayland xvmc xa
-	xorg kernel_FreeBSD"
+	opencl openvg osmesa pax_kernel pic r600-llvm-compiler selinux +shared-glapi
+	vdpau wayland xvmc xa xorg kernel_FreeBSD"
 
 REQUIRED_USE="
 	d3d?    ( gallium )
 	g3dvl?  ( gallium )
 	llvm?   ( gallium )
 	openvg? ( egl gallium )
-	opencl? ( gallium )
+	opencl? ( gallium r600-llvm-compiler )
 	gbm?    ( shared-glapi )
 	g3dvl? ( || ( vdpau xvmc ) )
 	vdpau? ( g3dvl )
+	r600-llvm-compiler? ( gallium llvm || ( video_cards_r600 video_cards_radeon ) )
 	xa?  ( gallium )
 	xorg?  ( gallium )
 	xvmc?  ( g3dvl )
@@ -74,7 +73,7 @@ REQUIRED_USE="
 	video_cards_r200?   ( classic )
 	video_cards_r300?   ( gallium )
 	video_cards_r600?   ( gallium )
-	video_cards_radeonsi?   ( gallium llvm xorg )
+	video_cards_radeonsi?   ( gallium llvm )
 	video_cards_vmware? ( gallium )
 "
 
@@ -89,13 +88,12 @@ EXTERNAL_DEPEND="
 # keep blocks in rdepend for binpkg
 # gtest file collision bug #411825
 RDEPEND="${EXTERNAL_DEPEND}
-	!dev-cpp/gtest
+	dev-util/indent
 	!<x11-base/xorg-server-1.7
 	!<=x11-proto/xf86driproto-2.0.3
 	classic? ( app-admin/eselect-mesa )
 	gallium? ( app-admin/eselect-mesa )
 	>=app-admin/eselect-opengl-1.2.2
-	app-admin/eselect-opencl
 	dev-libs/expat
 	gbm? ( sys-fs/udev )
 	>=x11-libs/libX11-1.3.99.901
@@ -104,6 +102,7 @@ RDEPEND="${EXTERNAL_DEPEND}
 	x11-libs/libXxf86vm
 	>=x11-libs/libxcb-1.8
 	d3d? ( app-emulation/wine )
+	opencl? ( app-admin/eselect-opencl )
 	vdpau? ( >=x11-libs/libvdpau-0.4.1 )
 	wayland? ( dev-libs/wayland )
 	xorg? (
@@ -128,12 +127,13 @@ done
 DEPEND="${RDEPEND}
 	llvm? (
 		>=sys-devel/llvm-2.9
+		r600-llvm-compiler? ( >=sys-devel/llvm-3.1 )
 		video_cards_radeonsi? ( >=sys-devel/llvm-3.1 )
 	)
-	opencl? ( 
-				>=sys-devel/clang-3.0
+	opencl? (
+				>=sys-devel/clang-3.1
 				>=sys-devel/gcc-4.6
-				)
+	)
 	=dev-lang/python-2*
 	dev-libs/libxml2[python]
 	dev-util/pkgconfig
@@ -172,6 +172,9 @@ src_prepare() {
 		EPATCH_SUFFIX="patch" \
 		epatch
 	fi
+
+	# relax the requirement that r300 must have llvm, bug 380303
+	epatch "${FILESDIR}"/${P}-dont-require-llvm-for-r300.patch
 
 	# fix for hardened pax_kernel, bug 240956
 	[[ ${PV} != 9999* ]] && epatch "${FILESDIR}"/glx_ro_text_segm.patch
@@ -229,6 +232,7 @@ src_configure() {
 			$(use_enable g3dvl gallium-g3dvl)
 			$(use_enable llvm gallium-llvm)
 			$(use_enable openvg)
+			$(use_enable r600-llvm-compiler)
 			$(use_enable vdpau)
 			$(use_enable xvmc)
 		"
@@ -247,6 +251,7 @@ src_configure() {
 				! use video_cards_r600; then
 			gallium_enable video_cards_radeon r300 r600
 		fi
+		# opencl stuff
 		if use opencl; then
 			myconf+="
 				$(use_enable opencl)
@@ -352,13 +357,12 @@ src_install() {
 			popd
 		eend $?
 	fi
-
 	if use opencl; then
 		ebegin "Moving Gallium/Clover OpenCL implentation for dynamic switching"
 		if [ -f "${ED}/usr/$(get_libdir)/libOpenCL.so" ]; then
-			mv -f "${ED}"/usr/$(get_libdir)/libOpenCL.so* "${ED}"/usr/$(get_libdir)/OpenCL/vendors/mesa
+			mv -f "${ED}"/usr/$(get_libdir)/libOpenCL.so* \
+			"${ED}"/usr/$(get_libdir)/OpenCL/vendors/mesa
 		fi
-		eend $?
 	fi
 }
 
