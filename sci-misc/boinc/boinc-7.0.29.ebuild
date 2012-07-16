@@ -4,6 +4,8 @@
 
 EAPI=4
 
+WANT_AUTOMAKE="1.11"
+
 inherit flag-o-matic eutils wxwidgets autotools base user
 
 DESCRIPTION="The Berkeley Open Infrastructure for Network Computing"
