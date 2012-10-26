@@ -5,7 +5,7 @@
 EAPI=5
 USE_RUBY="ruby19"
 
-inherit eutils multilib ruby-ng user
+inherit eutils multilib ruby-ng user scons-utils
 
 DESCRIPTION="OpenNebula Virtual Infrastructure Engine"
 HOMEPAGE="http://www.opennebula.org/"
@@ -17,7 +17,7 @@ KEYWORDS="~amd64"
 IUSE="mysql sqlite"
 
 RDEPEND=">=dev-libs/xmlrpc-c-1.18.02[abyss,cxx,threads]
-	dev-lang/ruby:1.8
+	dev-lang/ruby:1.9
 	mysql? ( dev-db/mysql )
 	dev-db/sqlite:3[threadsafe]
 	net-misc/openssh"
@@ -30,53 +30,43 @@ ruby_add_rdepend "dev-ruby/nokogiri
 # make sure no eclass is running tests
 RESTRICT="test fetch"
 
+ONEUSER="oneadmin"
+ONEGROUP="oneadmin"
+
+S="${WORKDIR}/${P}.0"
+
 pkg_nofetch() {
 	einfo "Please go to http://downloads.opennebula.org/"
 	einfo "Download ${P} and place it to ${DISTDIR}"
 }
-
-ONEUSER="oneadmin"
-ONEGROUP="oneadmin"
 
 pkg_setup () {
 	enewgroup ${ONEGROUP}
 	enewuser ${ONEUSER} -1 /bin/bash /var/lib/one ${ONEGROUP}
 }
 
+src_prepare() {
+	default
+}
+
 src_unpack() {
 	default
 }
 
-src_prepare() {
-	epatch \
-		"${FILESDIR}/${PV}-respect_flags.patch" \
-		"${FILESDIR}/${PV}-o_creat.patch"
-
-	sed -i -e 's|chmod|true|' install.sh || die "sed failed"
-}
-
 src_configure() {
-	:
+	myesconsargs=(
+		$(use_scons mysql)
+		)
 }
 
 src_compile() {
-	local myconf
-	use mysql && myconf+="mysql=yes " || myconf+="mysql=no "
-	scons \
-		${myconf} \
-		$(sed -r 's/.*(-j\s*|--jobs=)([0-9]+).*/-j\2/' <<< ${MAKEOPTS}) \
-		|| die "building ${PN} failed"
+	escons
 }
 
 src_install() {
 	DESTDIR=${T} ./install.sh || die "install failed"
 
 	cd "${T}"
-
-	# fixing paths
-	sed -i \
-		-e 's|//share/hooks|/usr/share/one/hooks|' \
-		etc/oned.conf || die "sed failed"
 
 	# installing things for real
 	dobin bin/*
@@ -86,9 +76,6 @@ src_install() {
 
 	insinto /usr/share/doc/${PF}
 	doins -r share/examples
-
-	insinto /usr/share/one
-	doins -r share/hooks
 
 	keepdir /var/lock/one
 	keepdir /var/lib/one
