@@ -25,9 +25,12 @@ DEPEND="${RDEPEND}
 	sys-devel/gettext
 	virtual/pkgconfig"
 
-src_configure() {
+src_prepare() {
 	# No configure file provided at the moment
-	eautoreconf --force --install
+	eautoreconf
+}
+
+src_configure() {
 	# No YaST in Gentoo
 	econf --disable-zypp --with-conf="/etc/conf.d"
 }
