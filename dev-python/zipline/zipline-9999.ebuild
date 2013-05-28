@@ -34,6 +34,7 @@ DEPEND="
 		dev-python/msgpack[${PYTHON_USEDEP}]
 		dev-python/logbook[${PYTHON_USEDEP}]
 		dev-python/requests[${PYTHON_USEDEP}]
+		dev-python/delorean[${PYTHON_USEDEP}]
 		"
 RDEPEND="${DEPEND}"
 
