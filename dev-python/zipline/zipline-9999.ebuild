@@ -32,6 +32,7 @@ DEPEND="
 		>=dev-python/numpy-1.6d[${PYTHON_USEDEP}]
 		>=dev-python/pandas-0.9[${PYTHON_USEDEP}]
 		dev-python/msgpack[${PYTHON_USEDEP}]
+		dev-python/logbook[${PYTHON_USEDEP}]
 		"
 RDEPEND="${DEPEND}"
 
