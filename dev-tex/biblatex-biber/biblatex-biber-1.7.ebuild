@@ -38,7 +38,7 @@ RDEPEND=">=dev-lang/perl-5.16
 	dev-perl/URI
 	dev-perl/XML-LibXML-Simple
 	dev-perl/XML-LibXSLT
-	=dev-tex/biblatex-2.6
+	~dev-tex/biblatex-2.7
 	virtual/perl-IPC-Cmd"
 DEPEND="${RDEPEND}
 	test? ( dev-perl/File-Which )
