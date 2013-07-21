@@ -54,4 +54,4 @@ DEPEND="${RDEPEND}
 
 SRC_TEST="parallel"
 
-PATCHES=( "${FILESDIR}"/${PN}-1.6-remove-mozilla-ca.patch )
+PATCHES=( "${FILESDIR}"/${PN}-1.7-remove-mozilla-ca.patch )
