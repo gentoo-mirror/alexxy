@@ -1,6 +1,7 @@
---- bin/biber.orig	2013-05-03 05:59:40.000000000 +0000
-+++ bin/biber	2013-05-03 05:59:56.549653262 +0000
-@@ -65,7 +65,6 @@
+diff -urN biblatex-biber-1.7.orig/bin/biber biblatex-biber-1.7/bin/biber
+--- biblatex-biber-1.7.orig/bin/biber	2013-07-04 01:29:20.000000000 +0400
++++ biblatex-biber-1.7/bin/biber	2013-07-22 03:29:21.158897956 +0400
+@@ -67,7 +67,6 @@
             'sortfirstinits=s',
             'sortlocale|l=s',
             'sortupper=s',
@@ -8,7 +9,7 @@
             'ssl-noverify-host',
             'tool',
             'tool_align',
-@@ -552,12 +551,6 @@
+@@ -604,12 +603,6 @@
  using B<--fastsort|-f>, your OS collation locale determines
  this and this option is ignored (default is true).
  
@@ -21,9 +22,21 @@
  =item B<--ssl-noverify-host>
  
  Turn off host verification when using HTTPS to fetch remote data sources.
---- data/schemata/config.rnc.orig	2013-05-03 05:59:17.000000000 +0000
-+++ data/schemata/config.rnc	2013-05-03 06:02:24.454651117 +0000
-@@ -52,7 +52,6 @@
+diff -urN biblatex-biber-1.7.orig/Build.PL biblatex-biber-1.7/Build.PL
+--- biblatex-biber-1.7.orig/Build.PL	2013-07-04 01:29:20.000000000 +0400
++++ biblatex-biber-1.7/Build.PL	2013-07-22 03:33:11.986908081 +0400
+@@ -66,7 +66,6 @@
+         'Business::ISBN' => 0,
+         'Business::ISSN' => 0,
+         'Business::ISMN' => 0,
+-        'Mozilla::CA' =>  '20130114',
+         'perl' => '5.16.0'
+     },
+     recommends => {
+diff -urN biblatex-biber-1.7.orig/data/schemata/config.rnc biblatex-biber-1.7/data/schemata/config.rnc
+--- biblatex-biber-1.7.orig/data/schemata/config.rnc	2013-07-04 01:29:20.000000000 +0400
++++ biblatex-biber-1.7/data/schemata/config.rnc	2013-07-22 03:29:41.924898867 +0400
+@@ -157,7 +157,6 @@
        map+
      }+
    }? &
@@ -31,9 +44,10 @@
    element ssl-noverify-host    { "0" | "1" }? &
    element tool                 { "0" | "1" }? &
    element tool_align           { "0" | "1" }? &
---- data/schemata/config.rng.orig	2013-05-03 05:59:11.000000000 +0000
-+++ data/schemata/config.rng	2013-05-03 06:02:38.506650914 +0000
-@@ -254,14 +254,6 @@
+diff -urN biblatex-biber-1.7.orig/data/schemata/config.rng biblatex-biber-1.7/data/schemata/config.rng
+--- biblatex-biber-1.7.orig/data/schemata/config.rng	2013-07-04 01:29:20.000000000 +0400
++++ biblatex-biber-1.7/data/schemata/config.rng	2013-07-22 03:30:12.661900215 +0400
+@@ -531,14 +531,6 @@
            </element>
          </optional>
          <optional>
@@ -48,9 +62,10 @@
            <element name="ssl-noverify-host">
              <choice>
                <value>0</value>
---- lib/Biber/Input/file/biblatexml.pm.orig	2013-05-03 05:48:56.000000000 +0000
-+++ lib/Biber/Input/file/biblatexml.pm	2013-05-03 05:57:23.039655487 +0000
-@@ -84,16 +84,6 @@
+diff -urN biblatex-biber-1.7.orig/lib/Biber/Input/file/biblatexml.pm biblatex-biber-1.7/lib/Biber/Input/file/biblatexml.pm
+--- biblatex-biber-1.7.orig/lib/Biber/Input/file/biblatexml.pm	2013-07-04 01:29:21.000000000 +0400
++++ biblatex-biber-1.7/lib/Biber/Input/file/biblatexml.pm	2013-07-22 03:31:00.149902298 +0400
+@@ -93,16 +93,6 @@
      $logger->info("Data source '$filename' is a remote .xml - fetching ...");
      if ($1) { # HTTPS
        # use IO::Socket::SSL qw(debug4); # useful for debugging SSL issues
@@ -67,9 +82,10 @@
        if (defined(Biber::Config->getoption('ssl-noverify-host'))) {
            $ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
        }
---- lib/Biber/Input/file/bibtex.pm.orig	2013-05-02 10:39:19.000000000 +0000
-+++ lib/Biber/Input/file/bibtex.pm	2013-05-03 05:49:52.637662018 +0000
-@@ -125,16 +125,6 @@
+diff -urN biblatex-biber-1.7.orig/lib/Biber/Input/file/bibtex.pm biblatex-biber-1.7/lib/Biber/Input/file/bibtex.pm
+--- biblatex-biber-1.7.orig/lib/Biber/Input/file/bibtex.pm	2013-07-04 01:29:20.000000000 +0400
++++ biblatex-biber-1.7/lib/Biber/Input/file/bibtex.pm	2013-07-22 03:31:36.297903883 +0400
+@@ -134,16 +134,6 @@
      $logger->info("Data source '$source' is a remote BibTeX data source - fetching ...");
      if ($1) { # HTTPS
        # use IO::Socket::SSL qw(debug99); # useful for debugging SSL issues
@@ -86,9 +102,10 @@
        if (defined(Biber::Config->getoption('ssl-noverify-host'))) {
            $ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
        }
---- lib/Biber/Input/file/endnotexml.pm.orig	2013-05-02 10:39:20.000000000 +0000
-+++ lib/Biber/Input/file/endnotexml.pm	2013-05-03 05:50:10.607661757 +0000
-@@ -102,16 +102,6 @@
+diff -urN biblatex-biber-1.7.orig/lib/Biber/Input/file/endnotexml.pm biblatex-biber-1.7/lib/Biber/Input/file/endnotexml.pm
+--- biblatex-biber-1.7.orig/lib/Biber/Input/file/endnotexml.pm	2013-07-04 01:29:20.000000000 +0400
++++ biblatex-biber-1.7/lib/Biber/Input/file/endnotexml.pm	2013-07-22 03:31:56.034904749 +0400
+@@ -112,16 +112,6 @@
      $logger->info("Data source '$source' is a remote EndNote XML datasource - fetching ...");
      if ($1) { # HTTPS
        # use IO::Socket::SSL qw(debug4); # useful for debugging SSL issues
@@ -105,9 +122,10 @@
        if (defined(Biber::Config->getoption('ssl-noverify-host'))) {
            $ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
        }
---- lib/Biber/Input/file/ris.pm.orig	2013-05-02 10:39:20.000000000 +0000
-+++ lib/Biber/Input/file/ris.pm	2013-05-03 05:50:29.344661485 +0000
-@@ -97,16 +97,6 @@
+diff -urN biblatex-biber-1.7.orig/lib/Biber/Input/file/ris.pm biblatex-biber-1.7/lib/Biber/Input/file/ris.pm
+--- biblatex-biber-1.7.orig/lib/Biber/Input/file/ris.pm	2013-07-04 01:29:20.000000000 +0400
++++ biblatex-biber-1.7/lib/Biber/Input/file/ris.pm	2013-07-22 03:32:17.511905691 +0400
+@@ -107,16 +107,6 @@
      $logger->info("Data source '$source' is a remote RIS data source - fetching ...");
      if ($1) { # HTTPS
        # use IO::Socket::SSL qw(debug4); # useful for debugging SSL issues
@@ -124,9 +142,10 @@
        if (defined(Biber::Config->getoption('ssl-noverify-host'))) {
            $ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
        }
---- lib/Biber/Input/file/zoterordfxml.pm.orig	2013-05-02 10:39:20.000000000 +0000
-+++ lib/Biber/Input/file/zoterordfxml.pm	2013-05-03 05:50:42.166661300 +0000
-@@ -114,16 +114,6 @@
+diff -urN biblatex-biber-1.7.orig/lib/Biber/Input/file/zoterordfxml.pm biblatex-biber-1.7/lib/Biber/Input/file/zoterordfxml.pm
+--- biblatex-biber-1.7.orig/lib/Biber/Input/file/zoterordfxml.pm	2013-07-04 01:29:20.000000000 +0400
++++ biblatex-biber-1.7/lib/Biber/Input/file/zoterordfxml.pm	2013-07-22 03:32:35.649906487 +0400
+@@ -123,16 +123,6 @@
      $logger->info("Data source '$source' is a remote Zotero RDF/XML data source - fetching ...");
      if ($1) { # HTTPS
        # use IO::Socket::SSL qw(debug4); # useful for debugging SSL issues
@@ -143,33 +162,25 @@
        if (defined(Biber::Config->getoption('ssl-noverify-host'))) {
            $ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
        }
---- Build.PL.orig	2013-05-02 10:39:20.000000000 +0000
-+++ Build.PL	2013-05-03 05:47:37.416663978 +0000
-@@ -65,7 +65,6 @@
-         'Business::ISBN' => 0,
-         'Business::ISSN' => 0,
-         'Business::ISMN' => 0,
--        'Mozilla::CA' => 0,
-         'perl' => '5.16.0'
-     },
-     recommends => {
---- META.json.orig	2013-05-02 10:39:20.000000000 +0000
-+++ META.json	2013-05-03 05:51:59.858660173 +0000
+diff -urN biblatex-biber-1.7.orig/META.json biblatex-biber-1.7/META.json
+--- biblatex-biber-1.7.orig/META.json	2013-07-04 01:29:20.000000000 +0400
++++ biblatex-biber-1.7/META.json	2013-07-22 03:33:29.583908853 +0400
 @@ -48,7 +48,6 @@
              "List::AllUtils" : "0",
              "List::MoreUtils" : "0",
              "Log::Log4perl" : "0",
--            "Mozilla::CA" : "0",
+-            "Mozilla::CA" : "20130114",
              "Regexp::Common" : "0",
              "Text::BibTeX" : "0.66",
              "URI" : "0",
---- META.yml.orig	2013-05-03 06:08:19.000000000 +0000
-+++ META.yml	2013-05-03 06:08:36.176645728 +0000
-@@ -83,7 +83,6 @@
+diff -urN biblatex-biber-1.7.orig/META.yml biblatex-biber-1.7/META.yml
+--- biblatex-biber-1.7.orig/META.yml	2013-07-04 01:29:20.000000000 +0400
++++ biblatex-biber-1.7/META.yml	2013-07-22 03:33:44.344909500 +0400
+@@ -88,7 +88,6 @@
    List::AllUtils: 0
    List::MoreUtils: 0
    Log::Log4perl: 0
--  Mozilla::CA: 0
+-  Mozilla::CA: 20130114
    Regexp::Common: 0
    Text::BibTeX: 0.66
    URI: 0
