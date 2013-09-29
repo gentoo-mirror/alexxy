@@ -5,7 +5,7 @@
 EAPI="5"
 
 if [[ $PV = *9999* ]]; then
-	scm_eclass=git-2
+	scm_eclass="git-r3 autotools"
 	EGIT_REPO_URI="https://github.com/luke-jr/bfgminer
 				git://github.com/luke-jr/bfgminer"
 	# bitfury lives in separate branch
@@ -84,6 +84,12 @@ DEPEND="${DEPEND}
 		)
 	)
 "
+
+src_prepare() {
+	if [[ $PV = *9999* ]]; then
+		eautoreconf
+	fi
+}
 
 src_configure() {
 	local CFLAGS="${CFLAGS}"
