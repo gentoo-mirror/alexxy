@@ -11,6 +11,8 @@ if [[ $PV = *9999* ]]; then
 	# bitfury lives in separate branch
 	if use bitfury; then
 		EGIT_BRANCH="bitfury"
+	else
+		EGIT_BRANCH="bfgminer"
 	fi
 	SRC_URI=""
 	KEYWORDS=""
