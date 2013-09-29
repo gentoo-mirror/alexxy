@@ -10,7 +10,7 @@ if [[ $PV = *9999* ]]; then
 				git://github.com/luke-jr/bfgminer"
 	# bitfury lives in separate branch
 	if use bitfury; then
-		EGIT_BRACNH="bitfury"
+		EGIT_BRANCH="bitfury"
 	fi
 	SRC_URI=""
 	KEYWORDS=""
