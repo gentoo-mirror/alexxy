@@ -30,7 +30,7 @@ SLOT="0"
 
 IUSE="+adl avalon bfsb bitforce bitfury bigpic cpumining examples hardened icarus lm_sensors littlefury modminer metabank ncurses +opencl proxy scrypt +udev unicode x6500 ztex"
 REQUIRED_USE="
-	|| ( avalon bitforce cpumining icarus modminer opencl proxy x6500 ztex )
+	|| ( avalon bfsb bitforce bitfury bigpic  cpumining icarus littlefury metabank  modminer opencl proxy x6500 ztex )
 	adl? ( opencl )
 	bfsb? ( bitfury )
 	bigpic? ( bitfury )
