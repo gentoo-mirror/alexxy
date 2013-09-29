@@ -5,7 +5,7 @@
 EAPI="5"
 
 if [[ $PV = *9999* ]]; then
-	scm_eclass=git-3
+	scm_eclass=git-2
 	EGIT_REPO_URI="https://github.com/luke-jr/bfgminer
 				git://github.com/luke-jr/bfgminer"
 	# bitfury lives in separate branch
@@ -20,7 +20,7 @@ else
 fi
 
 
-inherit eutils
+inherit eutils $scm_eclass
 
 DESCRIPTION="Modular Bitcoin ASIC/FPGA/GPU/CPU miner in C"
 HOMEPAGE="https://bitcointalk.org/?topic=168174"
