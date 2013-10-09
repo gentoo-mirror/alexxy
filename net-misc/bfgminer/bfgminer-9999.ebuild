@@ -8,12 +8,7 @@ if [[ $PV = *9999* ]]; then
 	scm_eclass="git-r3 autotools"
 	EGIT_REPO_URI="https://github.com/luke-jr/bfgminer
 				git://github.com/luke-jr/bfgminer"
-	# bitfury lives in separate branch
-	if use bitfury; then
-		EGIT_BRANCH="bitfury"
-	else
-		EGIT_BRANCH="bfgminer"
-	fi
+	EGIT_BRANCH="bfgminer"
 	SRC_URI=""
 	KEYWORDS=""
 else
