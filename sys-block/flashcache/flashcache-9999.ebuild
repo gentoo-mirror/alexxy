@@ -16,7 +16,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE="dracut"
 
 DEPEND="virtual/linux-sources"
-RDEPEND=""
+RDEPEND="
+	dracut? ( sys-kernel/dracut )
+"
 
 CONFIG_CHECK="BLK_DEV_DM"
 
@@ -34,7 +36,7 @@ src_install() {
 	cd "${S}/src/utils"
 	DESTTREE=/ dosbin flashcache_create flashcache_destroy flashcache_load || die
 	if use dracut; then
-		cd src/dracut-flashcache-0.3
+		cd "${S}/src/dracut-flashcache-0.3"
 		insinto /usr/lib/dracut/modules.d
 		doins -r 90flashcache
 		DESTTREE=/ dosbin fc_scan
