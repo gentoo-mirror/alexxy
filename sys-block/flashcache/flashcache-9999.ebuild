@@ -30,14 +30,14 @@ src_compile() {
 
 src_install() {
 	linux-mod_src_install
-
+	dodoc README doc/* || die
 	cd "${S}/src/utils"
-	dosbin flashcache_create flashcache_destroy flashcache_load || die
+	DESTTREE=/ dosbin flashcache_create flashcache_destroy flashcache_load || die
 	if use dracut; then
 		cd src/dracut-flashcache-0.3
 		insinto /usr/lib/dracut/modules.d
 		doins -r 90flashcache
-		dosbin fc_scan
+		DESTTREE=/ dosbin fc_scan
 		udev_dorules 10-flashcache.rules
 	fi
 }
