@@ -33,7 +33,6 @@ src_install() {
 
 	cd "${S}/src/utils"
 	dosbin flashcache_create flashcache_destroy flashcache_load || die
-	dodoc README* doc/* || die
 	if use dracut; then
 		cd src/dracut-flashcache-0.3
 		insinto /usr/lib/dracut/modules.d
