@@ -25,14 +25,15 @@ HOMEPAGE="https://bitcointalk.org/?topic=168174"
 LICENSE="GPL-3"
 SLOT="0"
 
-IUSE="+adl avalon bfsb bitforce bitfury bigpic cpumining examples hardened icarus lm_sensors littlefury modminer metabank ncurses +opencl proxy scrypt +udev unicode x6500 ztex"
+IUSE="+adl avalon bfsb bitforce bitfury bigpic cpumining examples hashbuster hardened icarus knc lm_sensors littlefury modminer metabank nanofury ncurses +opencl proxy scrypt +udev unicode x6500 ztex"
 REQUIRED_USE="
-	|| ( avalon bfsb bitforce bitfury bigpic  cpumining icarus littlefury metabank  modminer opencl proxy x6500 ztex )
+	|| ( avalon bfsb bitforce bitfury bigpic  cpumining icarus knc littlefury metabank  modminer opencl proxy x6500 ztex )
 	adl? ( opencl )
 	bfsb? ( bitfury )
 	bigpic? ( bitfury )
 	littlefury? ( bitfury )
 	metabank? ( bitfury )
+	nanofury? ( bitfury )
 	lm_sensors? ( opencl )
 	scrypt? ( || ( cpumining opencl ) )
 	unicode? ( ncurses )
@@ -111,8 +112,11 @@ src_configure() {
 		$(use_enable bitfury) \
 		$(use_enable bitforce) \
 		$(use_enable cpumining) \
+		$(use_enable hashbuster) \
 		$(use_enable icarus) \
+		$(use_enable knc) \
 		$(use_enable littlefury) \
+		$(use_enable nanofury) \
 		$(use_enable modminer) \
 		$(use_enable metabank) \
 		$(use_with ncurses curses) \
