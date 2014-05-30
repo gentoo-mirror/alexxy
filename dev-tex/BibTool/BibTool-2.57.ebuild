@@ -51,9 +51,9 @@ src_install()
 {
 	emake DESTDIR="${D}" install
 
-	doman Doc/bibtool.1 || die
+	doman doc/bibtool.1 || die
 
 	if use doc ; then
-		dodoc Doc/{bibtool.pdf,c_lib.pdf,ref_card.pdf} || die
+		dodoc doc/{bibtool.pdf,c_lib.pdf,ref_card.pdf} || die
 	fi
 }
