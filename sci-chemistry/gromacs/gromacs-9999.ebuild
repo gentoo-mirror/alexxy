@@ -1,4 +1,4 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -29,7 +29,7 @@ else
 		test? ( http://gerrit.gromacs.org/download/regressiontests-${TEST_PV}.tar.gz )"
 fi
 
-ACCE_IUSE="sse2 sse4_1 avx_128_fma avx_256 avx2_256"
+ACCE_IUSE="cpu_flags_x86_sse2 cpu_flags_x86_sse4_1 cpu_flags_x86_fma4 cpu_flags_x86_avx cpu_flags_x86_avx2"
 
 DESCRIPTION="The ultimate molecular dynamics simulation package"
 HOMEPAGE="http://www.gromacs.org/"
@@ -58,7 +58,7 @@ CDEPEND="
 	python? (
 		dev-python/numpy
 		dev-python/sip
-		)
+	)
 	"
 DEPEND="${CDEPEND}
 	virtual/pkgconfig
@@ -74,7 +74,8 @@ REQUIRED_USE="
 	|| ( single-precision double-precision )
 	cuda? ( single-precision )
 	mkl? ( !blas !fftw !lapack )
-	python? ( ${PYTHON_REQUIRED_USE} )"
+	python? ( ${PYTHON_REQUIRED_USE} )
+	"
 
 DOCS=( AUTHORS README )
 
@@ -133,11 +134,11 @@ src_configure() {
 
 	#go from slowest to fastest acceleration
 	local acce="None"
-	use sse2 && acce="SSE2"
-	use sse4_1 && acce="SSE4.1"
-	use avx_128_fma && acce="AVX_128_FMA"
-	use avx_256 && acce="AVX_256"
-	use avx2_256 && acce="AVX2_256"
+	use cpu_flags_x86_sse2 && acce="SSE2"
+	use cpu_flags_x86_sse4_1 && acce="SSE4.1"
+	use cpu_flags_x86_fma4 && acce="AVX_128_FMA"
+	use cpu_flags_x86_avx && acce="AVX_256"
+	use cpu_flags_x86_avx2 && acce="AVX2_256"
 
 	#to create man pages, build tree binaries are executed (bug #398437)
 	[[ ${CHOST} = *-darwin* ]] && \
@@ -265,6 +266,12 @@ src_install() {
 	rm -f "${ED}"usr/bin/g_options*
 	rm -f "${ED}"usr/bin/GMXRC*
 	rm -f "${ED}"usr/lib*/libtng*.a
+
+	#workaround for libtng
+	if [[ $(get_libdir) != lib ]]; then
+		mv "${ED}"usr/lib/libtng* "${ED}usr/$(get_libdir)" || die
+		rmdir "${ED}"usr/lib || die
+	fi
 
 	readme.gentoo_create_doc
 }
