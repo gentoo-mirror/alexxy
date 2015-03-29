@@ -86,6 +86,8 @@ src_install() {
 
 	# use system avrdude
 	# patching class files is too hard
+	dodir "/usr/share/${PN}/hardware/tools/avr"
+	dodir "/usr/share/${PN}/hardware/tools/avr/bin"
 	dosym /usr/bin/avrdude "/usr/share/${PN}/hardware/tools/avr/bin/avrdude"
 	mkdir -p "/usr/share/${PN}/hardware/tools/avr/etc/"
 	dosym /etc/avrdude.conf "/usr/share/${PN}/hardware/tools/avr/etc/avrdude.conf"
