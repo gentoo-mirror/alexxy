@@ -15,7 +15,7 @@ inherit bash-completion-r1 cmake-utils cuda eutils multilib python-single-r1 rea
 if [[ $PV = *9999* ]]; then
 	if use python; then
 		EGIT_REPO_URI="git://biod.pnpi.spb.ru/alexxy/gromacs.git"
-		EGIT_BRANCH="pygromacs"
+		EGIT_BRANCH="pygromacs_v2"
 	else
 		EGIT_REPO_URI="git://git.gromacs.org/gromacs.git
 			https://gerrit.gromacs.org/gromacs.git
