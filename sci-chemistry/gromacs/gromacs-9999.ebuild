@@ -8,7 +8,7 @@ TEST_PV="5.0-rc1"
 
 CMAKE_MAKEFILE_GENERATOR="ninja"
 
-PYTHON_COMPAT=( python{3_2,3_3,3_4} )
+PYTHON_COMPAT=( python{3_2,3_3,3_4,3_5} )
 
 inherit bash-completion-r1 cmake-utils cuda eutils multilib python-single-r1 readme.gentoo toolchain-funcs
 
