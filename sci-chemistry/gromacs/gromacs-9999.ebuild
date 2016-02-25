@@ -1,16 +1,14 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Id$
 
 EAPI=5
-
-TEST_PV="5.0-rc1"
 
 CMAKE_MAKEFILE_GENERATOR="ninja"
 
 PYTHON_COMPAT=( python{3_2,3_3,3_4,3_5} )
 
-inherit bash-completion-r1 cmake-utils cuda eutils multilib python-single-r1 readme.gentoo toolchain-funcs
+inherit bash-completion-r1 cmake-utils cuda eutils multilib python-single-r1 readme.gentoo-r1 toolchain-funcs
 
 if [[ $PV = *9999* ]]; then
 	if use python; then
@@ -21,12 +19,14 @@ if [[ $PV = *9999* ]]; then
 			https://gerrit.gromacs.org/gromacs.git
 			git://github.com/gromacs/gromacs.git
 			http://repo.or.cz/r/gromacs.git"
-		EGIT_BRANCH="master"
+		[[ $PV = 9999 ]] && EGIT_BRANCH="master" || EGIT_BRANCH="release-${PV:0:1}-${PV:2:1}"
+		inherit git-r3
+		KEYWORDS=""
 	fi
-	inherit git-r3
 else
 	SRC_URI="ftp://ftp.gromacs.org/pub/${PN}/${PN}-${PV/_/-}.tar.gz
-		test? ( http://gerrit.gromacs.org/download/regressiontests-${TEST_PV}.tar.gz )"
+		test? ( http://gerrit.gromacs.org/download/regressiontests-${PV}.tar.gz )"
+	KEYWORDS="~alpha ~amd64 ~arm ~ppc64 ~sparc ~x86 ~amd64-linux ~x86-linux ~x64-macos ~x86-macos"
 fi
 
 ACCE_IUSE="cpu_flags_x86_sse2 cpu_flags_x86_sse4_1 cpu_flags_x86_fma4 cpu_flags_x86_avx cpu_flags_x86_avx2"
@@ -39,8 +39,7 @@ HOMEPAGE="http://www.gromacs.org/"
 #        base,    vmd plugins, fftpack from numpy,  blas/lapck from netlib,        memtestG80 library,  mpi_thread lib
 LICENSE="LGPL-2.1 UoI-NCSA !mkl? ( !fftw? ( BSD ) !blas? ( BSD ) !lapack? ( BSD ) ) cuda? ( LGPL-3 ) threads? ( BSD )"
 SLOT="0/${PV}"
-KEYWORDS=""
-IUSE="X blas boost cuda +doc -double-precision +fftw lapack +make-symlinks mkl mpi +offensive openmp python +single-precision test +threads +tng ${ACCE_IUSE}"
+IUSE="X blas boost cuda +doc -double-precision +fftw lapack mkl mpi +offensive openmp python +single-precision test +threads +tng ${ACCE_IUSE}"
 
 CDEPEND="
 	X? (
@@ -56,8 +55,8 @@ CDEPEND="
 	mkl? ( sci-libs/mkl )
 	mpi? ( virtual/mpi )
 	python? (
-		dev-python/numpy
-		dev-python/sip
+		dev-python/numpy[${PYTHON_USEDEP}]
+		dev-python/sip[${PYTHON_USEDEP}]
 	)
 	"
 DEPEND="${CDEPEND}
@@ -100,8 +99,8 @@ src_unpack() {
 		git-r3_src_unpack
 		if use test; then
 			EGIT_REPO_URI="git://git.gromacs.org/regressiontests.git" \
-			EGIT_BRANCH="master" EGIT_NOUNPACK="yes" EGIT_COMMIT="master" \
-			EGIT_SOURCEDIR="${WORKDIR}/regressiontests"\
+			EGIT_BRANCH="${EGIT_BRANCH}" \
+			EGIT_CHECKOUT_DIR="${WORKDIR}/regressiontests"\
 				git-r3_src_unpack
 		fi
 	fi
@@ -169,10 +168,9 @@ src_configure() {
 		$(cmake-utils_use openmp GMX_OPENMP)
 		$(cmake-utils_use offensive GMX_COOL_QUOTES)
 		$(cmake-utils_use boost GMX_EXTERNAL_BOOST)
+		$(cmake-utils_use python GMX_PYTHON_BINDINGS)
 		$(cmake-utils_use tng GMX_USE_TNG)
 		$(cmake-utils_use doc GMX_BUILD_MANUAL)
-		$(cmake-utils_use make-symlinks GMX_SYMLINK_OLD_BINARY_NAMES)
-		$(cmake-utils_use python GMX_PYTHON_BINDINGS)
 		-DGMX_DEFAULT_SUFFIX=off
 		-DGMX_SIMD="$acce"
 		-DGMX_LIB_INSTALL_DIR="$(get_libdir)"
@@ -206,6 +204,8 @@ src_configure() {
 			-DGMX_LIBS_SUFFIX="${suffix}"
 			)
 		BUILD_DIR="${WORKDIR}/${P}_${x}" cmake-utils_src_configure
+		[[ ${CHOST} != *-darwin* ]] || \
+		  sed -i '/SET(CMAKE_INSTALL_NAME_DIR/s/^/#/' "${WORKDIR}/${P}_${x}/gentoo_rules.cmake" || die
 		use mpi || continue
 		einfo "Configuring for ${x} precision with mpi"
 		mycmakeargs=(
@@ -220,6 +220,8 @@ src_configure() {
 			-DGMX_LIBS_SUFFIX="_mpi${suffix}"
 			)
 		BUILD_DIR="${WORKDIR}/${P}_${x}_mpi" CC="mpicc" cmake-utils_src_configure
+		[[ ${CHOST} != *-darwin* ]] || \
+		  sed -i '/SET(CMAKE_INSTALL_NAME_DIR/s/^/#/' "${WORKDIR}/${P}_${x}_mpi/gentoo_rules.cmake" || die
 	done
 }
 
@@ -228,9 +230,7 @@ src_compile() {
 		einfo "Compiling for ${x} precision"
 		BUILD_DIR="${WORKDIR}/${P}_${x}"\
 			cmake-utils_src_compile
-		# generate bash completion
-		BUILD_DIR="${WORKDIR}/${P}_${x}"\
-			cmake-utils_src_compile completion
+		# not 100% necessary for rel ebuilds as available from website
 		if use doc; then
 			BUILD_DIR="${WORKDIR}/${P}_${x}"\
 				cmake-utils_src_compile manual
@@ -256,17 +256,24 @@ src_install() {
 		if use doc; then
 			newdoc "${WORKDIR}/${P}_${x}"/docs/manual/gromacs.pdf "${PN}-manual-${PV}.pdf"
 		fi
-		newbashcomp "${WORKDIR}/${P}_${x}"/src/programs/completion/gmx-completion.bash gromacs
 		use mpi || continue
 		BUILD_DIR="${WORKDIR}/${P}_${x}_mpi" \
 			cmake-utils_src_install
 	done
-	# drop unneeded stuff
-	rm -f "${ED}"usr/bin/gmx-completion*
-	rm -f "${ED}"usr/bin/g_options*
-	rm -f "${ED}"usr/bin/GMXRC*
-	rm -f "${ED}"usr/lib*/libtng*.a
 
+	if use tng; then
+		insinto /usr/include/tng
+		doins src/external/tng_io/include/tng/*h
+	fi
+	# drop unneeded stuff
+	rm "${ED}"usr/bin/GMXRC* || die
+	for x in "${ED}"usr/bin/gmx-completion-*.bash ; do
+		local n=${x##*/gmx-completion-}
+		n="${n%.bash}"
+		cat "${ED}"usr/bin/gmx-completion.bash "$x" > "${T}/${n}" || die
+		newbashcomp "${T}"/"${n}" "${n}"
+	done
+	rm "${ED}"usr/bin/gmx-completion*.bash || die
 	readme.gentoo_create_doc
 }
 
