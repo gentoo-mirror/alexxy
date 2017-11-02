@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -11,16 +11,11 @@ PYTHON_COMPAT=( python{3_2,3_3,3_4,3_5} )
 inherit bash-completion-r1 cmake-utils cuda eutils multilib python-single-r1 readme.gentoo-r1 toolchain-funcs
 
 if [[ $PV = *9999* ]]; then
-	if use python; then
-		EGIT_REPO_URI="git://biod.pnpi.spb.ru/alexxy/gromacs.git"
-		EGIT_BRANCH="pygromacs_v2"
-	else
-		EGIT_REPO_URI="git://git.gromacs.org/gromacs.git
+	EGIT_REPO_URI="git://git.gromacs.org/gromacs.git
 			https://gerrit.gromacs.org/gromacs.git
 			git://github.com/gromacs/gromacs.git
 			http://repo.or.cz/r/gromacs.git"
-		[[ $PV = 9999 ]] && EGIT_BRANCH="master" || EGIT_BRANCH="release-${PV:0:1}-${PV:2:1}"
-	fi
+	[[ $PV = 9999 ]] && EGIT_BRANCH="master" || EGIT_BRANCH="release-${PV:0:1}-${PV:2:1}"
 	inherit git-r3
 	KEYWORDS=""
 else
@@ -96,6 +91,10 @@ src_unpack() {
 	if [[ ${PV} != *9999 ]]; then
 		default
 	else
+		if use python; then
+			EGIT_REPO_URI="git://biod.pnpi.spb.ru/alexxy/gromacs.git"
+			EGIT_BRANCH="pygromacs_v2"
+		fi
 		git-r3_src_unpack
 		if use test; then
 			EGIT_REPO_URI="git://git.gromacs.org/regressiontests.git" \
