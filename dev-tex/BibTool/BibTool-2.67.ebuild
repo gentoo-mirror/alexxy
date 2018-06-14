@@ -1,8 +1,7 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
-EAPI="5"
+EAPI=6
 
 inherit flag-o-matic
 
@@ -35,7 +34,7 @@ src_prepare()
 src_configure()
 {
 	append-flags -fno-strict-aliasing
-	econf 
+	econf
 	sed -i -e 's#@kpathsea_lib_static@##' makefile || die "sed failed"
 }
 

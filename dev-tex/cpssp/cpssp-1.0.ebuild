@@ -1,16 +1,15 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-tex/latex-calendar/latex-calendar-3.1.ebuild,v 1.8 2013/04/03 22:23:08 ulm Exp $
 
-EAPI="5"
+EAPI=6
 
 PYTHON_COMPAT=( python{2_6,2_7} )
 
 inherit latex-package distutils-r1
 
 DESCRIPTION="cpssp - Draw protein secondary structures"
-HOMEPAGE="http://www.ctan.org/pkg/cpssp"
-SRC_URI="http://dev.gentoo.org/~alexxy/distfiles/${P}.zip"
+HOMEPAGE="https://www.ctan.org/pkg/cpssp"
+SRC_URI="https://dev.gentoo.org/~alexxy/distfiles/${P}.zip"
 
 LICENSE="LPPL-1.3c"
 SLOT="0"
