@@ -29,6 +29,7 @@ src_prepare()
 		-e 's,^NON_ANSI_DEFS.*,NON_ANSI_DEFS = @DEFS@ -DSTDC_HEADERS,g' \
 		-e 's,\$(INSTALLPREFIX),\$(DESTDIR)\$(INSTALLPREFIX),g' \
 		-i AutoConf/makefile.in || die
+	default
 }
 
 src_configure()
