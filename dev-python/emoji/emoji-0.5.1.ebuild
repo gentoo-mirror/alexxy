@@ -12,7 +12,7 @@ HOMEPAGE="https://github.com/carpedm20/emoji/"
 LICENSE="BSD"
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64"
+KEYWORDS="~amd64 ~arm ~arm64"
 
 BDEPEND=""
 RDEPEND=""
