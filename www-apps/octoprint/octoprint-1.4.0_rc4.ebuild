@@ -73,7 +73,7 @@ RDEPEND="
 	>=dev-python/feedparser-5.2.1
 	<dev-python/feedparser-5.3
 	>=dev-python/future-0.18.2
-	<dev-python/future-0.18
+	<dev-python/future-0.19
 	>=dev-python/websocket-client-0.56
 	<dev-python/websocket-client-0.57
 	>=dev-python/wrapt-1.11.2
