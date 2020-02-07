@@ -16,3 +16,5 @@ KEYWORDS="~amd64 ~arm ~arm64"
 
 BDEPEND=""
 RDEPEND=""
+
+PATCHES=( "${FILESDIR}/${P}-examples.patch" )
