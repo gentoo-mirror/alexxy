@@ -1,14 +1,18 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python2_7 python3_{5,6,7} pypy )
+PYTHON_COMPAT=( python3_{5,6,7} )
 
 inherit distutils-r1
 
+MY_PN="${PN}"
+MY_P="${MY_PN}-${PV}.post0"
+S=$WORKDIR/$MY_P
+
 DESCRIPTION="wrapper for subprocess which provides command pipeline functionality"
 HOMEPAGE="http://sarge.readthedocs.org/"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+SRC_URI="mirror://pypi/${MY_PN:0:1}/${MY_PN}/${MY_P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
