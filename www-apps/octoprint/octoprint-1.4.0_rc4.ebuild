@@ -22,6 +22,7 @@ BDEPEND=""
 RDEPEND="
 	acct-user/octoprint
 	acct-group/octoprint
+	dev-python/pip
 	>=dev-python/flask-0.12
 	<dev-python/flask-0.13
 	>=dev-python/jinja-2.8.1
