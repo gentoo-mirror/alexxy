@@ -22,8 +22,8 @@ BDEPEND=""
 RDEPEND="
 	acct-user/octoprint
 	acct-group/octoprint
-	>=dev-python/flask-0.10.1
-	<dev-python/flask-0.11
+	>=dev-python/flask-0.12
+	<dev-python/flask-0.13
 	>=dev-python/jinja-2.8.1
 	<dev-python/jinja-2.9
 	~www-servers/tornado-4.5.3
