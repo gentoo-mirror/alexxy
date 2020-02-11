@@ -7,7 +7,7 @@ inherit acct-user
 
 DESCRIPTION="User for OctoPrint"
 
-ACCT_USER_ID=34
+ACCT_USER_ID=368
 ACCT_USER_HOME=/var/lib/octoprint
 ACCT_USER_HOME_OWNER=octoprint:octoprint
 ACCT_USER_GROUPS=( octoprint video )
