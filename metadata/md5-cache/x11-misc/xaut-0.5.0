@@ -1,0 +1,11 @@
+DEFINED_PHASES=-
+DEPEND=x11-libs/libX11 x11-libs/libXtst x11-base/xorg-proto dev-lang/swig
+DESCRIPTION=Control X from command line and find things on screen
+EAPI=7
+HOMEPAGE=http://xautomation.sourceforge.net/
+KEYWORDS=~amd64 ~x86
+LICENSE=PSTT
+RDEPEND=x11-libs/libX11 x11-libs/libXtst
+SLOT=0
+SRC_URI=mirror://sourceforge/xautomation/xaut-0.5.0.tar.gz
+_md5_=7c0535df9e8f7e86789bb79cfb522340
