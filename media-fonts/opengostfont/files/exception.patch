@@ -1,0 +1,29 @@
+diff -u a/genfonts.py b/genfonts.py
+--- a/genfonts.py	2020-06-07 18:23:07.934731665 +0300
++++ b/genfonts.py	2020-06-07 18:24:06.205790361 +0300
+@@ -63,7 +63,7 @@
+         try:
+             font.generate(fontprefix+".ttf", flags=("opentype", "old-kern",
+                     "PfEd-colors", "PfEd-lookups"))
+-        except EnvironmentError, e:
++        except EnvironmentError as e:
+             print("!!! %s" % e, file=sys.stderr)
+             sys.exit(EX_GENFAIL)
+     elif type == FT_CAD:
+@@ -86,14 +86,14 @@
+         try:
+             font.generate(outfile, flags=("opentype", "old-kern",
+                     "PfEd-colors", "PfEd-lookups"))
+-        except EnvironmentError, e:
++        except EnvironmentError as e:
+             print("!!! %s" % e, file=sys.stderr)
+             sys.exit(EX_GENFAIL)
+     else:
+         try:
+             font.generate(fontprefix+".otf", flags=("opentype", "PfEd-colors",
+                     "PfEd-lookups"))
+-        except EnvironmentError, e:
++        except EnvironmentError as e:
+             print("!!! %s" % e, file=sys.stderr)
+             sys.exit(EX_GENFAIL)
+ 
