@@ -25,6 +25,7 @@ SLOT="0"
 IUSE="doc dht-index http-client proxy-client proxy-server proxy-server-identity proxy-openssl push-notifications python static-libs tools"
 
 DEPEND="
+	dev-cpp/asio
 	dev-libs/msgpack
 	net-libs/gnutls
 	python? ( dev-python/cython[${PYTHON_USEDEP}] )
