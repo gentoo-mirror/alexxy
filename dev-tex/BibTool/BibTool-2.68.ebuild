@@ -1,13 +1,15 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=8
 
 inherit flag-o-matic
 
 DESCRIPTION="BibTool is a powerful command-line tool to manipulate BibTeX databases."
 HOMEPAGE="http://www.gerd-neugebauer.de/software/TeX/BibTool.en.html"
 SRC_URI="http://mirror.ctan.org/biblio/bibtex/utils/bibtool/${P}.tar.gz"
+
+S="${WORKDIR}/${PN}"
 
 LICENSE="GPL-1"
 SLOT="0"
@@ -18,8 +20,6 @@ DEPEND="
 	dev-libs/kpathsea
 	doc? ( app-text/texlive )"
 RDEPEND="$DEPEND"
-
-S="${WORKDIR}/${PN}"
 
 src_prepare()
 {
