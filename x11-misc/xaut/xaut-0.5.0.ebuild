@@ -1,11 +1,11 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 DESCRIPTION="Control X from command line and find things on screen"
 HOMEPAGE="http://xautomation.sourceforge.net/"
-SRC_URI="mirror://sourceforge/xautomation/${P}.tar.gz"
+SRC_URI="https://downloads.sourceforge.net/project/xautomation/xautomation/${P}.tar.gz"
 
 LICENSE="PSTT"
 SLOT="0"
