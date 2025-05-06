@@ -10,5 +10,5 @@ LICENSE=GPL-1
 RDEPEND=dev-libs/kpathsea doc? ( app-text/texlive )
 SLOT=0
 SRC_URI=http://mirror.ctan.org/biblio/bibtex/utils/bibtool/BibTool-2.68.tar.gz
-_eclasses_=toolchain-funcs	f9d71a6efe9d083aec750dd13968e169	flag-o-matic	e8de74bac929ba17427e740e95707d00
+_eclasses_=toolchain-funcs	f9d71a6efe9d083aec750dd13968e169	flag-o-matic	b892042b2667b8ac69ec8a2571dc290a
 _md5_=6b2ef9f6b27576b4d29ed5769fd8814d
