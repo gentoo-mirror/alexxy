@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..13} )
+PYTHON_COMPAT=( python3_{11..14} )
 
 inherit cmake python-r1
 
@@ -22,7 +22,7 @@ LICENSE="GPL-3"
 
 SLOT="0"
 
-IUSE="doc dht-index http-client proxy-client proxy-server proxy-server-identity proxy-openssl push-notifications python static-libs tools"
+IUSE="doc dht-index http-client proxy-client proxy-server proxy-server-identity proxy-openssl push-notifications python tools"
 
 DEPEND="
 	dev-cpp/asio
@@ -43,10 +43,7 @@ REQUIRED_USE="http-client? ( !proxy-server !proxy-client ) ${PYTHON_REQUIRED_USE
 src_configure() {
 	local mycmakeargs=(
 		-DOPENDHT_PYTHON=$(usex python)
-		-DOPENDHT_STATIC=$(usex static-libs)
 		-DOPENDHT_TOOLS=$(usex tools)
-		-DOPENDHT_SHARED=ON
-		-DOPENDHT_LOG=ON
 		-DOPENDHT_SYSTEMD=ON
 		-DOPENDHT_HTTP=$(usex http-client)
 		-DOPENDHT_INDEX=$(usex dht-index)
@@ -57,7 +54,6 @@ src_configure() {
 		-DOPENDHT_PROXY_OPENSSL=$(usex proxy-openssl)
 		-DOPENDHT_PUSH_NOTIFICATIONS=$(usex push-notifications)
 		-DOPENDHT_SANITIZE=OFF
-		-DOPENDHT_TESTS=OFF
 		-DOPENDHT_TESTS_NETWORK=OFF
 		-DOPENDHT_C=ON
 		-DOPENDHT_DOCUMENTATION=$(usex doc)
