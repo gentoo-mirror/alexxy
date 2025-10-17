@@ -1,4 +1,5 @@
+dev-python/fypp 3.2: Python powered Fortran metaprogramming
 dev-tex/BibTool 2.68: BibTool is a powerful command-line tool to manipulate BibTeX databases.
 media-fonts/opengostfont 1.0: Open-source version of the fonts by Russian standard GOST 2.304-81
-net-libs/opendht 3.2.0 9999: A lightweight C++11 Distributed Hash Table implementation
+net-libs/opendht 3.5.4 9999: A lightweight C++11 Distributed Hash Table implementation
 x11-misc/xaut 0.5.0: Control X from command line and find things on screen
